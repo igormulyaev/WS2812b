@@ -33,19 +33,9 @@ void loop() {
   }
   rainbowRunning('E');
 
+  delay(2000);
+
+  lighting();
 
   delay(2000);
-  /*runningColors();
-
-  delay(3000);
-
-  Lighting();
-
-  delay(2000);*/
-
-  // rainbowInTime();
-  // delay(64 * 30);
-  //delay(2000);
-
-
 }
