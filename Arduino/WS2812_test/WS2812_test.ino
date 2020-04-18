@@ -27,11 +27,12 @@ void setup()
 
 //----------------------------------------------------------
 void loop() {
+  rainbowRunning('S');
   for (int i = 0; i < 6; ++i) {
-    rainbowRunning();
+    rainbowRunning('W');
   }
+  rainbowRunning('E');
 
-  fadeOut();
 
   delay(2000);
   /*runningColors();

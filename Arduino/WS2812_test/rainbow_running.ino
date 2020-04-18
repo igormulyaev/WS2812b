@@ -31,17 +31,35 @@ int rainbowB(int pos) {
 }
 
 //----------------------------------------------------------
-void rainbowRunning() {
+// одни проход радуги по ленте
+void rainbowRunning(char type) {
+  uint8_t ledSE = 0;
+  uint8_t nextCnt = 13;
+
   for (int pos0 = 0; pos0 < 390; ++pos0) {
     int pos = pos0;
-    for (int i = 0; i < LED_COUNT; ++i) {
-      leds[i].r = rainbowR(pos);
-      leds[i].g = rainbowG(pos);
-      leds[i].b = rainbowB(pos);
+    for (uint8_t i = 0; i < LED_COUNT; ++i) {
+      if (type == 'W' || (type == 'S' && i < ledSE) || (type == 'E' && i >= ledSE)) {
+        leds[i].r = rainbowR(pos);
+        leds[i].g = rainbowG(pos);
+        leds[i].b = rainbowB(pos);
+      }
+      else {
+        leds[i].r = 0;
+        leds[i].g = 0;
+        leds[i].b = 0;
+      }
+
       pos += 13;
       pos = pos >= 390? pos - 390: pos;
     }
     LEDS.show();
-    delay(5);
+
+    if (--nextCnt == 0) {
+      nextCnt = 13;
+      ++ledSE;
+    }
+
+    delay(7);
   }
 }
