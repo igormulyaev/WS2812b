@@ -27,6 +27,7 @@ void setup()
 
 //----------------------------------------------------------
 void loop() {
+
   rainbowRunning('S');
   for (int i = 0; i < 6; ++i) {
     rainbowRunning('W');
