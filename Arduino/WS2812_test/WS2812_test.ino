@@ -27,16 +27,26 @@ void setup()
 
 //----------------------------------------------------------
 void loop() {
+  uint8_t arr[LED_COUNT];
+  
+  init_sort(arr);
+  LEDS.show();
+
+  delay(5000);
+
+  init_sort(arr);
+  LEDS.show();
+
+  delay(5000);
+
+  init_sort(arr);
+  LEDS.show();
+
+  delay(5000);
 
   rainbowRunning('S');
   for (int i = 0; i < 6; ++i) {
     rainbowRunning('W');
   }
   rainbowRunning('E');
-
-  delay(2000);
-
-  lighting();
-
-  delay(2000);
 }
