@@ -29,17 +29,26 @@ void setup()
 void loop() {
   uint8_t arr[LED_COUNT];
   
-  init_sort(arr);
+  ledsort_init_sorted(arr);
+  ledsort_set_led(arr);
   LEDS.show();
 
   delay(5000);
 
-  init_sort(arr);
+  ledsort_shuffle(arr);
+  ledsort_set_led(arr);
   LEDS.show();
 
   delay(5000);
 
-  init_sort(arr);
+  ledsort_shuffle(arr);
+  ledsort_set_led(arr);
+  LEDS.show();
+
+  delay(5000);
+
+  ledsort_shuffle(arr);
+  ledsort_set_led(arr);
   LEDS.show();
 
   delay(5000);
