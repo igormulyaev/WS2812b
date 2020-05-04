@@ -52,10 +52,11 @@ void loop() {
   LEDS.show();
 
   delay(5000);
-
+/*
   rainbowRunning('S');
   for (int i = 0; i < 6; ++i) {
     rainbowRunning('W');
   }
   rainbowRunning('E');
+*/
 }
