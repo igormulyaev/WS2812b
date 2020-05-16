@@ -1,13 +1,3 @@
-void ledsort_swap(uint8_t *arr, uint8_t pos) {
-  uint8_t t = arr[pos];
-  arr[pos] = arr[pos + 1];
-  arr[pos + 1] = t;
-
-  CRGB tt = leds[pos];
-  leds[pos] = leds[pos + 1];
-  leds[pos + 1] = tt;
-}
-
 void ledsort_double_bubble(uint8_t *arr) {
   uint8_t startPos = 0;
   uint8_t endPos = LED_COUNT - 1;

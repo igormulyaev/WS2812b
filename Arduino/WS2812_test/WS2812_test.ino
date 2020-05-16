@@ -27,28 +27,30 @@ void setup()
 
 //----------------------------------------------------------
 void loop() {
-  uint8_t arr[LED_COUNT];
+  uint8_t arr1[LED_COUNT];
+  uint8_t arr2[LED_COUNT];
   
-  ledsort_init_sorted(arr);
-  ledsort_shuffle(arr);
-  ledsort_set_led(arr);
-  LEDS.show();
+  ledsort_init_sorted(arr1);
+  ledsort_shuffle(arr1);
+  memcpy(arr2, arr1, sizeof(arr1));
 
-  delay(5000);
+  // Bubble
+  ledsort_show(arr1, 3000);
 
-  ledsort_bubble(arr);
+  ledsort_show(arr1, 0);
 
-  delay(5000);
+  ledsort_bubble(arr1);
 
-  ledsort_shuffle(arr);
-  ledsort_set_led(arr);
-  LEDS.show();
+  ledsort_show(arr1, 3000);
 
-  delay(5000);
+  // Double bubble
+  ledsort_show(arr2, 3000);
 
-  ledsort_double_bubble(arr);
+  ledsort_show(arr2, 0);
 
-  delay(5000);
+  ledsort_double_bubble(arr2);
+
+  ledsort_show(arr2, 3000);
 
 /*
   rainbowRunning('S');
