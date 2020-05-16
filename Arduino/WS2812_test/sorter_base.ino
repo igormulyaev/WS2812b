@@ -25,7 +25,7 @@ void ledsort_set_led(uint8_t *arr) {
     uint8_t v = arr[i];
     v = (v << 1) + (v >> 2); // 0..29 -> 0..65
     leds[i].r = gamma65[65 - v];
-    leds[i].g = gamma65[50];
-    leds[i].b = gamma65[v];
+    leds[i].g = gamma65[v];
+    leds[i].b = 0;
   }
 }
