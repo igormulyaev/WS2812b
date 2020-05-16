@@ -40,6 +40,16 @@ void loop() {
 
   delay(5000);
 
+  ledsort_shuffle(arr);
+  ledsort_set_led(arr);
+  LEDS.show();
+
+  delay(5000);
+
+  ledsort_double_bubble(arr);
+
+  delay(5000);
+
 /*
   rainbowRunning('S');
   for (int i = 0; i < 6; ++i) {

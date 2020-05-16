@@ -18,7 +18,7 @@ void ledsort_bubble(uint8_t *arr) {
 
         LEDS.show();
       }
-      delay(100);
+      delay(ledsort_step_delay);
     }
     --endPos;
   } while (cont);

@@ -1,3 +1,5 @@
+static const int ledsort_step_delay = 70;
+
 // заполняем значениями по порядку, чтобы гарантированно были все
 void ledsort_init_sorted(uint8_t *arr) {
 
