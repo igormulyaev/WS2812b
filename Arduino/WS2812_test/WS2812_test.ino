@@ -30,38 +30,16 @@ void loop() {
   uint8_t arr[LED_COUNT];
   
   ledsort_init_sorted(arr);
-  ledsort_set_led(arr, 30);
-  LEDS.show();
-
-  delay(5000);
-
-  ledsort_set_led(arr, 40);
-  LEDS.show();
-
-  delay(5000);
-
-  ledsort_set_led(arr, 50);
-  LEDS.show();
-
-  delay(5000);
-
   ledsort_shuffle(arr);
-  ledsort_set_led(arr, 40);
+  ledsort_set_led(arr);
   LEDS.show();
 
   delay(5000);
 
-  ledsort_shuffle(arr);
-  ledsort_set_led(arr, 40);
-  LEDS.show();
+  ledsort_bubble(arr);
 
   delay(5000);
 
-  ledsort_shuffle(arr);
-  ledsort_set_led(arr, 40);
-  LEDS.show();
-
-  delay(5000);
 /*
   rainbowRunning('S');
   for (int i = 0; i < 6; ++i) {
