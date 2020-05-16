@@ -19,11 +19,13 @@ void ledsort_shuffle(uint8_t *arr) {
 }
 
 // заполняем цвета пикселей
-void ledsort_set_led(uint8_t *arr) {
+void ledsort_set_led(uint8_t *arr, uint8_t green) {
 
   for (uint8_t i = 0; i < LED_COUNT; ++i) {
-    leds[i].r = gamma65[58 - arr[i] * 2];
-    leds[i].g = gamma65[40];
-    leds[i].b = gamma65[arr[i] * 2];
+    uint8_t v = arr[i];
+    v = (v << 1) + (v >> 2); // 0..29 -> 0..65
+    leds[i].r = gamma65[65 - v];
+    leds[i].g = gamma65[green];
+    leds[i].b = gamma65[v];
   }
 }
