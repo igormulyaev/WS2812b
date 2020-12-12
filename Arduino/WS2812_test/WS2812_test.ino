@@ -27,30 +27,32 @@ void setup()
 
 //----------------------------------------------------------
 void loop() {
-  uint8_t arr1[LED_COUNT];
-  uint8_t arr2[LED_COUNT];
+  uint8_t arr[LED_COUNT];
+  uint8_t arr_copy[LED_COUNT];
   
-  ledsort_init_sorted(arr1);
-  ledsort_shuffle(arr1);
-  memcpy(arr2, arr1, sizeof(arr1));
+  ledsort_init_sorted(arr);
+  ledsort_shuffle(arr);
+  memcpy(arr_copy, arr, sizeof(arr));
 
   // Bubble
-  ledsort_show(arr1, 3000);
+  ledsort_show(arr, 3000);
 
-  ledsort_show(arr1, 0);
+  ledsort_show(arr, 0);
 
-  ledsort_bubble(arr1);
+  ledsort_bubble(arr);
 
-  ledsort_show(arr1, 3000);
+  ledsort_show(arr, 3000);
 
   // Double bubble
-  ledsort_show(arr2, 3000);
+  memcpy(arr, arr_copy, sizeof(arr));
 
-  ledsort_show(arr2, 0);
+  ledsort_show(arr, 3000);
 
-  ledsort_double_bubble(arr2);
+  ledsort_show(arr, 0);
 
-  ledsort_show(arr2, 3000);
+  ledsort_double_bubble(arr);
+
+  ledsort_show(arr, 3000);
 
 /*
   rainbowRunning('S');
