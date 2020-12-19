@@ -1,6 +1,5 @@
-/* Hello World Example
-
-   This example code is in the Public Domain (or CC0 licensed, at your option.)
+/* 
+   This code is in the Public Domain (or CC0 licensed, at your option.)
 
    Unless required by applicable law or agreed to in writing, this
    software is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR
@@ -15,16 +14,14 @@
 #include "esp_system.h"
 #include "esp_spi_flash.h"
 
+#include "led_params.h"
+
 #include "FastLED.h"
 #include "FX.h"
 
 #define GPIO_INPUT_IO_0     GPIO_NUM_0
 #define GPIO_INPUT_PIN_SEL  (1ULL<<GPIO_INPUT_IO_0)
 #define ESP_INTR_FLAG_DEFAULT 0
-
-#define NUM_LEDS 1
-#define DATA_PIN_1 13 
-#define LED_TYPE    WS2812B
 
 extern "C" {
   void app_main();
@@ -96,6 +93,6 @@ void app_main() {
 
   printf(" entering app main, call add leds\n");
   // the WS2811 family uses the RMT driver
-  FastLED.addLeds<LED_TYPE, DATA_PIN_1>(leds1, NUM_LEDS);
+  FastLED.addLeds<LED_TYPE, LED_DATA_PIN>(leds1, NUM_LEDS);
 
 }
