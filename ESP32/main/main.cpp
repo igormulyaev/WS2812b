@@ -27,7 +27,7 @@ extern "C" {
   void app_main();
 }
 
-CRGB leds1[NUM_LEDS];
+CRGB leds[NUM_LEDS];
 
 static xQueueHandle gpio_evt_queue = NULL;
 
@@ -39,35 +39,11 @@ static void IRAM_ATTR gpio_isr_handler(void* arg)
 
 static void gpio_task_example(void* arg)
 {
-  uint32_t io_num;
-  for(int cnt = 0; true; cnt = (cnt + 1) % 3) {
-    if(xQueueReceive(gpio_evt_queue, &io_num, portMAX_DELAY)) {
-      printf("GPIO[%d] intr\n", io_num);
-
-      if (cnt == 0) {
-        printf("red\n");
-        leds1[0].red = 255;
-        leds1[0].green = 0;
-        leds1[0].blue = 0;
-      } else if (cnt == 1) {
-        printf("green\n");
-        leds1[0].red = 0;
-        leds1[0].green = 255;
-        leds1[0].blue = 0;
-      } else {
-        printf("blue\n");
-        leds1[0].red = 0;
-        leds1[0].green = 0;
-        leds1[0].blue = 255;
-      }
-      FastLED.show();
-    }
-  }
 }
 
 
 void app_main() {
-
+  /*
   gpio_config_t io_conf;
 
   //interrupt of rising edge
@@ -90,9 +66,25 @@ void app_main() {
   gpio_install_isr_service(ESP_INTR_FLAG_DEFAULT);
   //hook isr handler for specific gpio pin
   gpio_isr_handler_add(GPIO_INPUT_IO_0, gpio_isr_handler, (void*) GPIO_INPUT_IO_0);
-
+    */
   printf(" entering app main, call add leds\n");
   // the WS2811 family uses the RMT driver
-  FastLED.addLeds<LED_TYPE, LED_DATA_PIN>(leds1, NUM_LEDS);
+  FastLED.addLeds<LED_TYPE, LED_DATA_PIN>(leds, NUM_LEDS);
+
+  FastLED.clearData();
+  FastLED.show();
+  
+  int pos = NUM_LEDS - 1;
+
+  while(1) {
+    vTaskDelay(50 / portTICK_PERIOD_MS);
+    printf("set %d black\n", pos);
+    leds[pos].setRGB(0, 0, 0);
+    
+    pos = (pos + 1) % NUM_LEDS;
+    printf("set %d white\n", pos);
+    leds[pos].setRGB(32, 32, 32);
+    FastLED.show();
+  };
 
 }
