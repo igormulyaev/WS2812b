@@ -3,11 +3,12 @@
 
 // Target frames per second
 #define STARS_FPS 50
-#define STARS_PALETTE_LEN 12
+#define STARS_STEPS 75
+#define STARS_COUNT 5
 
 typedef struct {
-  int pos[2];
-  int step[2];
+  int pos[STARS_COUNT];
+  int step[STARS_COUNT];
 } SStarsData;
 
 void starsStart(void *pvParameters);
