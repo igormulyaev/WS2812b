@@ -4,7 +4,7 @@
 // Target frames per second
 #define STARS_FPS 50
 #define STARS_STEPS 75
-#define STARS_COUNT 5
+#define STARS_COUNT 10
 
 typedef struct {
   int pos[STARS_COUNT];

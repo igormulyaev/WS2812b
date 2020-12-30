@@ -39,7 +39,19 @@ void app_main() {
   FastLED.clearData();
   FastLED.show();
 
-  printf("create task\n");
+  // all leds test 3 times
+  int pos = NUM_LEDS - 1;
+  for (int tst = NUM_LEDS * 3; tst; --tst) {
+    vTaskDelay(20 / portTICK_PERIOD_MS);
+    leds[pos] = CRGB::Black;
+
+    pos = (pos + 1) % NUM_LEDS;
+    leds[pos] = 0x202020;
+    FastLED.show();
+  }
+  leds[pos] = CRGB::Black;
+
+  printf("Start Stars task\n");
 
   xTaskCreatePinnedToCore(&starsStart, "stars", 4000, NULL, 5, NULL, 0);
 }
