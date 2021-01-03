@@ -39,17 +39,26 @@ void app_main() {
   FastLED.clearData();
   FastLED.show();
 
-  // all leds test 3 times
-  int pos = NUM_LEDS - 1;
-  for (int tst = NUM_LEDS * 3; tst; --tst) {
-    vTaskDelay(20 / portTICK_PERIOD_MS);
-    leds[pos] = CRGB::Black;
-
-    pos = (pos + 1) % NUM_LEDS;
-    leds[pos] = 0x202020;
-    FastLED.show();
+  // all leds test 6 times
+  for (int tst = 0; tst < 6; ++tst) {
+    CRGB color;
+    switch (tst % 3) {
+      case 0:
+        color = 0x040000;
+        printf("test green\n");
+        break;
+      case 1:
+        color = 0x000400;
+        printf("test red\n");
+        break;
+      case 2:
+        color = 0x000004;
+        printf("test blue\n");
+        break;
+    }
+    FastLED.showColor(color);
+    vTaskDelay(1000 / portTICK_PERIOD_MS);
   }
-  leds[pos] = CRGB::Black;
 
   printf("Start Stars task\n");
 
