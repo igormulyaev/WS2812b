@@ -99,7 +99,14 @@ static void stars_callback (void *param) {
   for (int starN = 0; starN < STARS_COUNT; ++starN) {
     if (++step[starN] == STARS_STEPS) {
       leds[pos[starN]] = CRGB::Black;
-      pos[starN] = esp_random() % NUM_LEDS;
+
+      // Find empty position for new star
+      int newPos;
+      do {
+        newPos = esp_random() % NUM_LEDS;
+      } while (leds[newPos] != CRGB(CRGB::Black));
+
+      pos[starN] = newPos;
       step[starN] = 0;
     }
   }
