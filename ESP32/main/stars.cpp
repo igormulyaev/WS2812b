@@ -3,7 +3,7 @@
 
 static SStarsData starsData;
 
-static CRGB starsPalette[STARS_STEPS] = {
+static const CRGB starsPalette[STARS_STEPS] = {
   0x4B5C38,
   0x809764,
   0xA6BD87,
