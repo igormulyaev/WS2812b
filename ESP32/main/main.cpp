@@ -16,6 +16,7 @@
 
 #include "led_params.h"
 #include "stars.h"
+#include "christmas_tree.h"
 
 #include "FastLED.h"
 #include "FX.h"
@@ -59,8 +60,12 @@ void app_main() {
     FastLED.showColor(color);
     vTaskDelay(1000 / portTICK_PERIOD_MS);
   }
-
+  /*
   printf("Start Stars task\n");
 
   xTaskCreatePinnedToCore(&starsStart, "stars", 4000, NULL, 5, NULL, 0);
+  */
+  printf("Start Christmas Tree task\n");
+
+  xTaskCreatePinnedToCore(&treeStart, "tree", 4000, NULL, 5, NULL, 0);
 }

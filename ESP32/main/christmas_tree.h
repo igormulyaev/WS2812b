@@ -4,8 +4,6 @@
 // Target frames per second
 #define CHRISTMAS_TREE_FPS 50
 
-// End of color sequence
-#define M_TREE_CL_STOP  (0 << 5)
 // Black background
 #define M_TREE_CL_SPACE (1 << 5)
 // Sparks of snow
@@ -19,7 +17,11 @@
 // Tree stem
 #define M_TREE_CL_STEM (6 << 5)
 
+#define M_TREE_CL_MASK (7 << 5)
+#define M_TREE_CNT_MASK 0x1f
+
 typedef struct {
+  int dummy;
 } STreeData;
 
 void treeStart(void *pvParameters);
