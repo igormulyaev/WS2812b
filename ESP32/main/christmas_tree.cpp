@@ -9,75 +9,74 @@ static STreeData treeData;
 // count max = 32
 static const uint8_t treeArch[] = {
   // 0 col
-  M_TREE_CL_SPACE  | (28 - 1),
+  M_TREE_CL_SPACE  | (25 - 1),
+  M_TREE_CL_LIGHT0 | (2 - 1),
+  M_TREE_CL_SPACE  | (1 - 1),
   M_TREE_CL_SNOW   | (4 - 1),
   // 1 col (reverse)
   M_TREE_CL_SPACE  | (1 - 1),
+  M_TREE_CL_LIGHT0 | (1 - 1),
+  M_TREE_CL_BRANCH | (2 - 1),
+  M_TREE_CL_SPACE  | (4 - 1),
   M_TREE_CL_LIGHT0 | (2 - 1),
-  M_TREE_CL_SPACE  | (25 - 1),
+  M_TREE_CL_SPACE  | (18 + 11 - 1),
   // 2 col
-  M_TREE_CL_SPACE  | (18 - 1),
   M_TREE_CL_LIGHT0 | (2 - 1),
   M_TREE_CL_SPACE  | (4 - 1),
   M_TREE_CL_BRANCH | (2 - 1),
   M_TREE_CL_LIGHT0 | (1 - 1),
-  M_TREE_CL_SPACE  | (1 - 1),
+  M_TREE_CL_SPACE  | (4 - 1),
+  M_TREE_CL_BRANCH | (2 - 1),
+  M_TREE_CL_SPACE  | (2 - 1),
   M_TREE_CL_SNOW   | (4 - 1),
   // 3 col (reverse)
   M_TREE_CL_SPACE  | (2 - 1),
   M_TREE_CL_BRANCH | (2 - 1),
-  M_TREE_CL_SPACE  | (4 - 1),
   M_TREE_CL_LIGHT0 | (1 - 1),
-  M_TREE_CL_BRANCH | (2 - 1),
   M_TREE_CL_SPACE  | (4 - 1),
-  M_TREE_CL_LIGHT0 | (2 - 1),
-  M_TREE_CL_SPACE  | (11 + 10 - 1),
-  // 4 col
   M_TREE_CL_BRANCH | (2 - 1),
   M_TREE_CL_LIGHT0 | (1 - 1),
   M_TREE_CL_SPACE  | (3 - 1),
   M_TREE_CL_LIGHT0 | (1 - 1),
   M_TREE_CL_BRANCH | (2 - 1),
-  M_TREE_CL_SPACE  | (4 - 1),
+  M_TREE_CL_SPACE  | (10 + 8 - 1),
+  // 4 col
   M_TREE_CL_LIGHT0 | (1 - 1),
-  M_TREE_CL_BRANCH | (2 - 1),
+  M_TREE_CL_BRANCH | (3 - 1),
+  M_TREE_CL_SPACE  | (3 - 1),
+  M_TREE_CL_BRANCH | (3 - 1),
+  M_TREE_CL_SPACE  | (4 - 1),
+  M_TREE_CL_BRANCH | (4 - 1),
   M_TREE_CL_SPACE  | (2 - 1),
   M_TREE_CL_SNOW   | (4 - 1),
   // 5 col (reverse)
   M_TREE_CL_SPACE  | (2 - 1),
   M_TREE_CL_BRANCH | (4 - 1),
-  M_TREE_CL_SPACE  | (4 - 1),
-  M_TREE_CL_BRANCH | (3 - 1),
+  M_TREE_CL_LIGHT0 | (1 - 1),
   M_TREE_CL_SPACE  | (3 - 1),
   M_TREE_CL_BRANCH | (3 - 1),
   M_TREE_CL_LIGHT0 | (1 - 1),
-  M_TREE_CL_SPACE  | (8 + 6 - 1),
+  M_TREE_CL_SPACE  | (3 - 1),
+  M_TREE_CL_BRANCH | (4 - 1),
+  M_TREE_CL_LIGHT0 | (1 - 1),
+  M_TREE_CL_SPACE  | (6 + 1 - 1),
   // 6 col
-  M_TREE_CL_LIGHT0 | (1 - 1),
-  M_TREE_CL_BRANCH | (4 - 1),
-  M_TREE_CL_SPACE  | (3 - 1),
-  M_TREE_CL_LIGHT0 | (1 - 1),
-  M_TREE_CL_BRANCH | (3 - 1),
-  M_TREE_CL_SPACE  | (3 - 1),
-  M_TREE_CL_LIGHT0 | (1 - 1),
-  M_TREE_CL_BRANCH | (4 - 1),
+  M_TREE_CL_LIGHT1 | (2 - 1),
+  M_TREE_CL_SPACE  | (1 - 1),
+  M_TREE_CL_BRANCH | (6 - 1),
+  M_TREE_CL_SPACE  | (2 - 1),
+  M_TREE_CL_BRANCH | (6 - 1),
+  M_TREE_CL_SPACE  | (1 - 1),
+  M_TREE_CL_BRANCH | (7 - 1),
   M_TREE_CL_SPACE  | (2 - 1),
   M_TREE_CL_SNOW   | (4 - 1),
   // 7 col (reverse)
-  M_TREE_CL_SPACE  | (2 - 1),
-  M_TREE_CL_BRANCH | (7 - 1),
-  M_TREE_CL_SPACE  | (1 - 1),
-  M_TREE_CL_BRANCH | (6 - 1),
-  M_TREE_CL_SPACE  | (2 - 1),
-  M_TREE_CL_BRANCH | (6 - 1),
-  M_TREE_CL_SPACE  | (1 - 1),
-  M_TREE_CL_LIGHT1 | (1 - 1),
-  M_TREE_CL_SPACE  | (2 - 1),
+  M_TREE_CL_STEM   | (26 - 1),
+  M_TREE_CL_LIGHT1 | (2 + 2 - 1),
   // 8 col
-  M_TREE_CL_LIGHT1 | (2 - 1),
   M_TREE_CL_STEM   | (26 - 1),
   M_TREE_CL_SNOW   | (4 - 1),
-  // 9 col (reverse), copy of 7
+  // 9 col (reverse)
   M_TREE_CL_SPACE  | (2 - 1),
   M_TREE_CL_BRANCH | (7 - 1),
   M_TREE_CL_SPACE  | (1 - 1),
@@ -87,7 +86,7 @@ static const uint8_t treeArch[] = {
   M_TREE_CL_SPACE  | (1 - 1),
   M_TREE_CL_LIGHT1 | (1 - 1),
   M_TREE_CL_SPACE  | (2 + 6 - 1),
-  // 10 col, copy of 6
+  // 10 col
   M_TREE_CL_LIGHT0 | (1 - 1),
   M_TREE_CL_BRANCH | (4 - 1),
   M_TREE_CL_SPACE  | (3 - 1),
@@ -98,7 +97,7 @@ static const uint8_t treeArch[] = {
   M_TREE_CL_BRANCH | (4 - 1),
   M_TREE_CL_SPACE  | (2 - 1),
   M_TREE_CL_SNOW   | (4 - 1),
-  // 11 col (reverse), copy of 5
+  // 11 col (reverse)
   M_TREE_CL_SPACE  | (2 - 1),
   M_TREE_CL_BRANCH | (4 - 1),
   M_TREE_CL_SPACE  | (4 - 1),
@@ -107,7 +106,7 @@ static const uint8_t treeArch[] = {
   M_TREE_CL_BRANCH | (3 - 1),
   M_TREE_CL_LIGHT0 | (1 - 1),
   M_TREE_CL_SPACE  | (8 + 10 - 1),
-  // 12 col, copy of 4
+  // 12 col
   M_TREE_CL_BRANCH | (2 - 1),
   M_TREE_CL_LIGHT0 | (1 - 1),
   M_TREE_CL_SPACE  | (3 - 1),
@@ -118,7 +117,7 @@ static const uint8_t treeArch[] = {
   M_TREE_CL_BRANCH | (2 - 1),
   M_TREE_CL_SPACE  | (2 - 1),
   M_TREE_CL_SNOW   | (4 - 1),
-  // 13 col (reverse), copy of 3
+  // 13 col (reverse)
   M_TREE_CL_SPACE  | (2 - 1),
   M_TREE_CL_BRANCH | (2 - 1),
   M_TREE_CL_SPACE  | (4 - 1),
@@ -127,14 +126,14 @@ static const uint8_t treeArch[] = {
   M_TREE_CL_SPACE  | (4 - 1),
   M_TREE_CL_LIGHT0 | (2 - 1),
   M_TREE_CL_SPACE  | (11 + 18 - 1),
-  // 14 col, copy of 2
+  // 14 col
   M_TREE_CL_LIGHT0 | (2 - 1),
   M_TREE_CL_SPACE  | (4 - 1),
   M_TREE_CL_BRANCH | (2 - 1),
   M_TREE_CL_LIGHT0 | (1 - 1),
   M_TREE_CL_SPACE  | (1 - 1),
   M_TREE_CL_SNOW   | (4 - 1),
-  // 15 col (reverse), copy of 1
+  // 15 col (reverse)
   M_TREE_CL_SPACE  | (1 - 1),
   M_TREE_CL_LIGHT0 | (2 - 1)
 };
