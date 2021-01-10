@@ -17,6 +17,7 @@
 #include "led_params.h"
 #include "stars.h"
 #include "christmas_tree.h"
+#include "led_effect.h"
 
 #include "FastLED.h"
 #include "FX.h"
@@ -31,16 +32,13 @@ extern "C" {
 
 CRGB leds[NUM_LEDS];
 
-void app_main() {
+esp_timer_handle_t ledRefreshTimerH;
 
-  printf(" entering app main, call add leds\n");
-  // the WS2811 family uses the RMT driver
-  FastLED.addLeds<LED_TYPE, LED_DATA_PIN>(leds, NUM_LEDS);
+CLedEffect *currentEffect;
 
-  FastLED.clearData();
-  FastLED.show();
-
-  // all leds test 6 times
+// -------------------------------------------------------------------------------
+// all leds test 6 times
+void testLeds() {
   for (int tst = 0; tst < 6; ++tst) {
     CRGB color;
     switch (tst % 3) {
@@ -60,12 +58,51 @@ void app_main() {
     FastLED.showColor(color);
     vTaskDelay(1000 / portTICK_PERIOD_MS);
   }
-  /*
-  printf("Start Stars task\n");
+}
 
-  xTaskCreatePinnedToCore(&starsStart, "stars", 4000, NULL, 5, NULL, 0);
-  */
-  printf("Start Christmas Tree task\n");
 
-  xTaskCreatePinnedToCore(&treeStart, "tree", 4000, NULL, 5, NULL, 0);
+//--------------------------------------------------------
+static void ledRefreshCallback (void *param) {
+  currentEffect -> OnTimer();
+};
+
+// -------------------------------------------------------------------------------
+void startLedRefresh() {
+
+  esp_timer_create_args_t timer_create_args = {
+      .callback = ledRefreshCallback,
+      .arg = NULL,
+      .dispatch_method = ESP_TIMER_TASK,
+      .name = "Led_refresh_timer"
+  };
+
+  esp_timer_create(&timer_create_args, &ledRefreshTimerH);
+
+  esp_timer_start_periodic(ledRefreshTimerH, 1000000L / LED_FPS);
+}
+
+// -------------------------------------------------------------------------------
+void app_main() {
+
+  printf("entering app main, call add leds\n");
+
+  FastLED.addLeds<LED_TYPE, LED_DATA_PIN>(leds, NUM_LEDS);
+
+  FastLED.clearData();
+  FastLED.show();
+
+  printf("run test\n");
+  testLeds();
+
+  printf("create tree\n");
+  currentEffect = new CChristmasTree;
+  currentEffect -> OnStart();
+
+  printf("run refresh timer\n");
+  startLedRefresh();
+
+  // loop task
+  while (true) {
+    vTaskDelay(1000 / portTICK_PERIOD_MS);
+  };
 }

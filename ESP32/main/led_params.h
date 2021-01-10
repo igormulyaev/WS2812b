@@ -9,6 +9,7 @@
 #define NUM_LEDS (LED_WIDTH * LED_HEIGHT)
 #define LED_DATA_PIN 13 
 #define LED_TYPE    WS2812B
+#define LED_FPS 50
 
 extern CRGB leds[NUM_LEDS];
 

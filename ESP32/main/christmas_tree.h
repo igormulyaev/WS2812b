@@ -1,8 +1,7 @@
 ﻿#ifndef M_CHRISTMAS_TREE_H
 #define M_CHRISTMAS_TREE_H
 
-// Target frames per second
-#define CHRISTMAS_TREE_FPS 50
+#include "led_effect.h"
 
 // Black background
 #define M_TREE_CL_SPACE (1 << 5)
@@ -20,10 +19,10 @@
 #define M_TREE_CL_MASK (7 << 5)
 #define M_TREE_CNT_MASK 0x1f
 
-typedef struct {
-  int dummy;
-} STreeData;
-
-void treeStart(void *pvParameters);
-
+class CChristmasTree: public CLedEffect {
+  public:
+    virtual void OnStart();
+    virtual void OnTimer();
+    virtual ~CChristmasTree();
+};
 #endif
