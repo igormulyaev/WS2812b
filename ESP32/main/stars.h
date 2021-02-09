@@ -1,16 +1,27 @@
 ﻿#ifndef M_STARS_H
 #define M_STARS_H
 
+#include <cstdint>
+#include <vector>
+#include "led_effect.h"
+#include "FastLED.h"
+
 // Target frames per second
-#define STARS_FPS 50
-#define STARS_STEPS 75
+#define STARS_STEPS (sizeof(CStars :: palette) / sizeof(CStars :: palette[0]))
 #define STARS_COUNT 10
 
-typedef struct {
-  int pos[STARS_COUNT];
-  int step[STARS_COUNT];
-} SStarsData;
+class CStars: public CLedEffect {
+  private:
+    static const CRGB palette[];
 
-void starsStart(void *pvParameters);
+    std :: vector <int> pos;
+    std :: vector <int> step;
 
+  public:
+    CStars();
+
+    virtual void OnStart();
+    virtual void OnTimer();
+    virtual ~CStars();
+};
 #endif

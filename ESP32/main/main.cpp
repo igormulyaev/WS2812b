@@ -95,7 +95,8 @@ void app_main() {
   testLeds();
 
   printf("create tree\n");
-  currentEffect = new CChristmasTree;
+  //currentEffect = new CChristmasTree;
+  currentEffect = new CStars;
   currentEffect -> OnStart();
 
   printf("run refresh timer\n");

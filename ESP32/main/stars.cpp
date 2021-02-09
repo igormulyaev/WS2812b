@@ -1,9 +1,8 @@
 ﻿#include "stars.h"
 #include "led_params.h"
 
-static SStarsData starsData;
-
-static const CRGB starsPalette[STARS_STEPS] = {
+// -----------------------------------------------------
+const CRGB CStars :: palette[] = {
   0x4B5C38,
   0x809764,
   0xA6BD87,
@@ -80,17 +79,15 @@ static const CRGB starsPalette[STARS_STEPS] = {
   0x000100,
   0x000100
 };
+// -----------------------------------------------------
+CStars :: CStars(): pos(STARS_COUNT), step(STARS_COUNT) {
+}
 
-//--------------------------------------------------------
-static void stars_callback (void *param) {
-
-  SStarsData *sd = (SStarsData *)param;
-  int *pos = sd->pos;
-  int *step = sd->step;
-
+// -----------------------------------------------------
+void CStars :: OnTimer() {
   // Update colors for current stars
   for (int starN = 0; starN < STARS_COUNT; ++starN) {
-    leds[pos[starN]] = starsPalette[step[starN]];
+    leds[pos[starN]] = palette[step[starN]];
   }
 
   FastLED.show();
@@ -110,32 +107,19 @@ static void stars_callback (void *param) {
       step[starN] = 0;
     }
   }
+
 };
 
-//--------------------------------------------------------
-void starsStart (void *pvParameters) {
+// -----------------------------------------------------
+void CStars :: OnStart() {
+  FastLED.clearData();
 
   for (int starN = 0; starN < STARS_COUNT; ++starN) {
-    starsData.pos[starN] = esp_random() % NUM_LEDS;
-    starsData.step[starN] = starN * STARS_STEPS / STARS_COUNT;
+    pos[starN] = esp_random() % NUM_LEDS;
+    step[starN] = starN * STARS_STEPS / STARS_COUNT;
   }
+}
 
-  esp_timer_create_args_t timer_create_args = {
-      .callback = stars_callback,
-      .arg = (void *) &starsData,
-      .dispatch_method = ESP_TIMER_TASK,
-      .name = "stars_timer"
-    };
-
-  esp_timer_handle_t timer_h;
-
-  esp_timer_create(&timer_create_args, &timer_h);
-
-  esp_timer_start_periodic(timer_h, 1000000L / STARS_FPS);
-
-  // loop task
-  while (1) {
-    vTaskDelay(1000 / portTICK_PERIOD_MS);
-  };
-
+// -----------------------------------------------------
+CStars :: ~CStars() {
 }
