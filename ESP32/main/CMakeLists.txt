@@ -3,6 +3,7 @@ idf_component_register (
     "main.cpp"
     "stars.cpp"
     "christmas_tree.cpp"
+    "fire_effect.cpp"
   INCLUDE_DIRS 
     "."
 )
