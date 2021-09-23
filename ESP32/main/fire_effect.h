@@ -7,6 +7,7 @@
 
 class CFireEffect: public CLedEffect {
   private:
+    static const CRGB firePalette[256];
     // Field to compute effect
     // Left -> Right, Top -> Bottom
     uint8_t field[NUM_LEDS]; 
