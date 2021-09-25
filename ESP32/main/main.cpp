@@ -17,6 +17,7 @@
 #include "led_params.h"
 #include "stars.h"
 #include "christmas_tree.h"
+#include "fire_effect.h"
 #include "led_effect.h"
 
 #include "FastLED.h"
@@ -94,9 +95,15 @@ void app_main() {
   printf("run test\n");
   testLeds();
 
-  printf("create tree\n");
+  //printf("create tree\n");
   //currentEffect = new CChristmasTree;
-  currentEffect = new CStars;
+  
+  //printf("create stars\n");
+  //currentEffect = new CStars;
+
+  printf("create fire\n");
+  currentEffect = new CFireEffect;
+
   currentEffect -> OnStart();
 
   printf("run refresh timer\n");

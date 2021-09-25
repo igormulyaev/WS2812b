@@ -16,6 +16,8 @@ class CFireEffect: public CLedEffect {
     void updateField();
     void updateLeds();
 
+    bool skipTick;
+    int cntBottom;
 
   public:
     virtual void OnStart();

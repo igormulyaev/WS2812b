@@ -1,17 +1,27 @@
 ﻿#include "fire_effect.h"
 #include "led_params.h"
 
-#define FIRE_K_LEFT 60
-#define FIRE_K_CENTER 60
-#define FIRE_K_RIGHT 60
-#define FIRE_K_BOTTOM 60
+#define FIRE_K_LEFT 20
+#define FIRE_K_CENTER 92
+#define FIRE_K_RIGHT 20
+#define FIRE_K_BOTTOM 92
+#define FIRE_BOTTOM_TICKS 6
+
 // -----------------------------------------------------
 void CFireEffect :: OnTimer() {
-  FastLED.show();
+  if (!skipTick) {
+    FastLED.show();
 
-  updateBottomLine();
-  updateField();
-  updateLeds();
+    if (cntBottom == 0) {
+      updateBottomLine();
+      cntBottom = FIRE_BOTTOM_TICKS;
+    }
+    --cntBottom;
+
+    updateField();
+    updateLeds();
+  }
+  skipTick = !skipTick;
 };
 
 // -----------------------------------------------------
@@ -19,6 +29,8 @@ void CFireEffect :: OnStart() {
   for (int pos = 0; pos < NUM_LEDS; ++pos) {
     leds[pos] = CRGB::Black;
   }
+  skipTick = false;
+  cntBottom = 0;
 }
 
 // -----------------------------------------------------
