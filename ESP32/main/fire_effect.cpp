@@ -58,6 +58,19 @@ void CFireEffect :: updateField() {
 
 // -----------------------------------------------------
 void CFireEffect :: updateLeds() {
+  CRGB *tgt = leds;
+  uint8_t const *src = field;
+  // difference between field positions to get next led value
+  int diff = LED_WIDTH;
+
+  for (int cols = LED_WIDTH; cols; --cols) {
+    for (int lines = LED_HEIGHT; lines; --lines) {
+      *tgt++ = firePalette[*src];
+      src += diff;
+    }
+    diff = -diff; // reverse direction for next column
+    src += diff + 1; // move to beginning of next column
+  }
 }
 
 // -----------------------------------------------------
