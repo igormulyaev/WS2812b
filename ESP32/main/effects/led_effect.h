@@ -4,10 +4,14 @@
 /*
   Basic Class for LED effects
 */
+#define M_INTERACT_DATA_LENGHT 16
+
+class ITimer;
 
 class CLedEffect {
   public:
-    virtual void OnStart() = 0;
+    virtual void OnStart(ITimer* timer) = 0;
+    virtual void OnInteract(const void* data) = 0;
     virtual void OnTimer() = 0;
     virtual ~CLedEffect() {};
 };

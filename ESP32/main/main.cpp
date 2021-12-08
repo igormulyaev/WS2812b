@@ -15,10 +15,13 @@
 #include "esp_spi_flash.h"
 
 #include "led_params.h"
-#include "stars.h"
-#include "christmas_tree.h"
-#include "fire_effect.h"
-#include "led_effect.h"
+#include "effects/led_effect.h"
+#include "effects/stars.h"
+#include "effects/christmas_tree.h"
+#include "effects/fire_effect.h"
+#include "effects/test_effect.h"
+
+#include "led_event_loop.h"
 
 #include "FastLED.h"
 #include "FX.h"
@@ -33,55 +36,6 @@ extern "C" {
 
 CRGB leds[NUM_LEDS];
 
-esp_timer_handle_t ledRefreshTimerH;
-
-CLedEffect *currentEffect;
-
-// -------------------------------------------------------------------------------
-// all leds test 6 times
-void testLeds() {
-  for (int tst = 0; tst < 6; ++tst) {
-    CRGB color;
-    switch (tst % 3) {
-      case 0:
-        color = 0x040000;
-        printf("test green\n");
-        break;
-      case 1:
-        color = 0x000400;
-        printf("test red\n");
-        break;
-      case 2:
-        color = 0x000004;
-        printf("test blue\n");
-        break;
-    }
-    FastLED.showColor(color);
-    vTaskDelay(1000 / portTICK_PERIOD_MS);
-  }
-}
-
-
-//--------------------------------------------------------
-static void ledRefreshCallback (void *param) {
-  currentEffect -> OnTimer();
-};
-
-// -------------------------------------------------------------------------------
-void startLedRefresh() {
-
-  esp_timer_create_args_t timer_create_args = {
-      .callback = ledRefreshCallback,
-      .arg = NULL,
-      .dispatch_method = ESP_TIMER_TASK,
-      .name = "Led_refresh_timer"
-  };
-
-  esp_timer_create(&timer_create_args, &ledRefreshTimerH);
-
-  esp_timer_start_periodic(ledRefreshTimerH, 1000000L / LED_FPS);
-}
-
 // -------------------------------------------------------------------------------
 void app_main() {
 
@@ -90,10 +44,10 @@ void app_main() {
   FastLED.addLeds<LED_TYPE, LED_DATA_PIN>(leds, NUM_LEDS);
 
   FastLED.clearData();
-  FastLED.show();
+  //FastLED.show();
 
-  printf("run test\n");
-  testLeds();
+  //printf("run test\n");
+  //testLeds();
 
   //printf("create tree\n");
   //currentEffect = new CChristmasTree;
@@ -101,16 +55,36 @@ void app_main() {
   //printf("create stars\n");
   //currentEffect = new CStars;
 
-  printf("create fire\n");
-  currentEffect = new CFireEffect;
+  //printf("create fire\n");
+  //currentEffect = new CFireEffect;
 
-  currentEffect -> OnStart();
+  //currentEffect -> OnStart();
 
-  printf("run refresh timer\n");
-  startLedRefresh();
+  //printf("run refresh timer\n");
+  //startLedRefresh();
+  CLedEffectLoop ledEffectLoop;
+  CTestEffect testEffect;
+
+  ledEffectLoop.postStartEvent(&testEffect);
+
+  char c;
 
   // loop task
   while (true) {
+    c = 'R';
+    ledEffectLoop.postInteractEvent(&c, sizeof(c));
+    vTaskDelay(1000 / portTICK_PERIOD_MS);
+
+    c = 'G';
+    ledEffectLoop.postInteractEvent(&c, sizeof(c));
+    vTaskDelay(1000 / portTICK_PERIOD_MS);
+
+    c = 'B';
+    ledEffectLoop.postInteractEvent(&c, sizeof(c));
+    vTaskDelay(1000 / portTICK_PERIOD_MS);
+
+    c = 'x';
+    ledEffectLoop.postInteractEvent(&c, sizeof(c));
     vTaskDelay(1000 / portTICK_PERIOD_MS);
   };
 }

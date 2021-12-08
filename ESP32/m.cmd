@@ -1,1 +1,1 @@
-idf.py monitor
+start idf.py monitor
