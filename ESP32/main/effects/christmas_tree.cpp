@@ -1,5 +1,5 @@
 ﻿#include "christmas_tree.h"
-#include "led_params.h"
+#include "led_base.h"
 
 // Black background
 #define M_TREE_CL_SPACE (1 << 5)

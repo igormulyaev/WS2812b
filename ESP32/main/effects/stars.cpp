@@ -1,5 +1,5 @@
 ﻿#include "stars.h"
-#include "led_params.h"
+#include "led_base.h"
 
 // -----------------------------------------------------
 const CRGB CStars :: palette[] = {

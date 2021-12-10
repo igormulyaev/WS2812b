@@ -26,42 +26,14 @@
 #include "FastLED.h"
 #include "FX.h"
 
-#define GPIO_INPUT_IO_0     GPIO_NUM_0
-#define GPIO_INPUT_PIN_SEL  (1ULL<<GPIO_INPUT_IO_0)
-#define ESP_INTR_FLAG_DEFAULT 0
-
 extern "C" {
   void app_main();
 }
 
-CRGB leds[NUM_LEDS];
-
 // -------------------------------------------------------------------------------
 void app_main() {
+  ledBaseInit ();
 
-  printf("entering app main, call add leds\n");
-
-  FastLED.addLeds<LED_TYPE, LED_DATA_PIN>(leds, NUM_LEDS);
-
-  FastLED.clearData();
-  //FastLED.show();
-
-  //printf("run test\n");
-  //testLeds();
-
-  //printf("create tree\n");
-  //currentEffect = new CChristmasTree;
-  
-  //printf("create stars\n");
-  //currentEffect = new CStars;
-
-  //printf("create fire\n");
-  //currentEffect = new CFireEffect;
-
-  //currentEffect -> OnStart();
-
-  //printf("run refresh timer\n");
-  //startLedRefresh();
   CLedEffectLoop ledEffectLoop;
   CTestEffect testEffect;
 
