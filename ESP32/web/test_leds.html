@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang=en>
+<head>
+  <meta charset=utf-8>
+  <title>Test leds</title>
+</head>
+<body>
+  <div>
+    Test leds
+  </div>
+
+  <p>
+    <input type="button" id="idBtnOn" value="Включить" onclick="sendCommand('on')" disabled>
+  </p>
+  <p>
+    <input type="button" id="idBtnRed" value="Red" onclick="sendCommand('R')" disabled>
+    <input type="button" id="idBtnGreen" value="Green" onclick="sendCommand('G')" disabled>
+    <input type="button" id="idBtnBlue" value="Blue" onclick="sendCommand('B')" disabled>
+    <input type="button" id="idBtnBlack" value="Black" onclick="sendCommand('x')" disabled>
+  </p>
+  <a href="index.html">Home</a>
+
+  <script>
+    // -------------------------------------------------------
+    async function sendCommand(command) {
+      console.log('command = ' + command);
+
+      let fetchOptions = (command == null)? 
+        null: {
+        method: 'POST',
+        headers: {
+         'Content-Type': 'application/json;charset=utf-8'
+        },
+        body: JSON.stringify({ cmd:command }),
+      };
+
+      if (command != null) {
+        console.log('await fetch' + fetchOptions.body);
+      }
+      let response = await fetch('/api/test_led', fetchOptions);
+
+      console.log('await fetch2');
+
+      let result = await response.json();
+
+      console.log('get result');
+
+      let isOn = (result.state == 1);
+
+      document.getElementById('idBtnOn').disabled = isOn;
+      document.getElementById('idBtnRed').disabled = !isOn;
+      document.getElementById('idBtnGreen').disabled = !isOn;
+      document.getElementById('idBtnBlue').disabled = !isOn;
+      document.getElementById('idBtnBlack').disabled = !isOn;
+    }
+    // -------------------------------------------------------
+    window.onload = function() {
+      sendCommand(null);
+    }
+  </script>
+</body>
+</html>

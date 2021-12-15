@@ -21,12 +21,12 @@ enum {
     INTERACT_LED_EVENT
 };
 
-class CLedEffectLoop : 
+class CLedEventLoop : 
   public ITimer {
   private:
 
-    CLedEffectLoop(const CLedEffectLoop &) = delete;
-    CLedEffectLoop & operator=(const CLedEffectLoop &) = delete;
+    CLedEventLoop(const CLedEventLoop &) = delete;
+    CLedEventLoop & operator=(const CLedEventLoop &) = delete;
 
     esp_event_loop_handle_t loopHandle;
     esp_timer_handle_t ledRefreshTimer;
@@ -44,8 +44,8 @@ class CLedEffectLoop :
     void interactEventAction(void* event_data);
 
   public:
-    CLedEffectLoop();
-    ~CLedEffectLoop();
+    CLedEventLoop();
+    ~CLedEventLoop();
 
     void postStartEvent(CLedEffect* effect);
     void postInteractEvent(void* data, size_t size);

@@ -1,8 +1,11 @@
 #include "led_base.h"
+#include "led_event_loop.h"
 
 static const char* TAG = "led_base";
 
 CRGB leds[NUM_LEDS];
+
+CLedEventLoop* ledEventLoop = 0;
 
 // -------------------------------------------------------------------------------
 void ledBaseInit () {
@@ -10,6 +13,8 @@ void ledBaseInit () {
 
   FastLED.addLeds <LED_TYPE, LED_DATA_PIN> (leds, NUM_LEDS);
   FastLED.clearData ();
+
+  ledEventLoop = new CLedEventLoop;
 
   ESP_LOGI (TAG, "End init FastLED");
 }
