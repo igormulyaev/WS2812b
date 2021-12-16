@@ -30,7 +30,7 @@ void app_main () {
 
   // loop task
   while (true) {
-    c = 'R';
+    /*c = 'R';
     ledEventLoop -> postInteractEvent (&c, sizeof (c));
     vTaskDelay (1000 / portTICK_PERIOD_MS);
 
@@ -43,7 +43,7 @@ void app_main () {
     vTaskDelay (1000 / portTICK_PERIOD_MS);
 
     c = 'x';
-    ledEventLoop -> postInteractEvent (&c, sizeof(c));
+    ledEventLoop -> postInteractEvent (&c, sizeof(c));*/
     vTaskDelay (1000 / portTICK_PERIOD_MS);
   };
 }
