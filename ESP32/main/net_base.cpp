@@ -71,5 +71,5 @@ void netBaseInit () {
 
   ESP_ERROR_CHECK (example_connect ());
   ESP_ERROR_CHECK (initFs ());
-  ESP_ERROR_CHECK (startHttpServer (WEB_MOUNT_POINT));
+//  ESP_ERROR_CHECK (startHttpServer (WEB_MOUNT_POINT));
 }

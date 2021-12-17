@@ -21,10 +21,8 @@ enum {
     INTERACT_LED_EVENT
 };
 
-class CLedEventLoop : 
-  public ITimer {
+class CLedEventLoop : public ITimer {
   private:
-
     CLedEventLoop(const CLedEventLoop &) = delete;
     CLedEventLoop & operator=(const CLedEventLoop &) = delete;
 
