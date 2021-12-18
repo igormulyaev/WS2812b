@@ -1,8 +1,8 @@
-﻿#include "stars.h"
+﻿#include "stars_effect.h"
 #include "led_base.h"
 
 // -----------------------------------------------------
-const CRGB CStars :: palette[] = {
+const CRGB StarsEffect :: palette[] = {
   0x4B5C38,
   0x809764,
   0xA6BD87,
@@ -80,11 +80,11 @@ const CRGB CStars :: palette[] = {
   0x000100
 };
 // -----------------------------------------------------
-CStars :: CStars(): pos(STARS_COUNT), step(STARS_COUNT) {
+StarsEffect :: StarsEffect(): pos(STARS_COUNT), step(STARS_COUNT) {
 }
 
 // -----------------------------------------------------
-void CStars :: OnTimer() {
+void StarsEffect :: OnTimer() {
   // Update colors for current stars
   for (int starN = 0; starN < STARS_COUNT; ++starN) {
     leds[pos[starN]] = palette[step[starN]];
@@ -111,7 +111,7 @@ void CStars :: OnTimer() {
 };
 
 // -----------------------------------------------------
-void CStars :: OnStart() {
+void StarsEffect :: OnStart() {
   FastLED.clearData();
 
   for (int starN = 0; starN < STARS_COUNT; ++starN) {
@@ -121,5 +121,5 @@ void CStars :: OnStart() {
 }
 
 // -----------------------------------------------------
-CStars :: ~CStars() {
+StarsEffect :: ~StarsEffect() {
 }

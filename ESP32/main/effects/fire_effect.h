@@ -5,7 +5,7 @@
 #include "led_effect.h"
 #include "led_base.h"
 
-class CFireEffect: public CLedEffect {
+class FireEffect: public LedEffect {
   private:
     static const CRGB firePalette[256];
     // Field to compute effect
@@ -22,6 +22,6 @@ class CFireEffect: public CLedEffect {
   public:
     virtual void OnStart();
     virtual void OnTimer();
-    virtual ~CFireEffect();
+    virtual ~FireEffect();
 };
 #endif

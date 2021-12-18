@@ -6,9 +6,9 @@
 
 extern CRGB leds[NUM_LEDS];
 
-class CLedEventLoop;
+class LedEventLoop;
 
-extern CLedEventLoop* ledEventLoop;
+extern LedEventLoop* ledEventLoop;
 
 void ledBaseInit ();
 

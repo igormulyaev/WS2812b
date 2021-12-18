@@ -8,7 +8,7 @@
 #define FIRE_BOTTOM_TICKS 6
 
 // -----------------------------------------------------
-void CFireEffect :: OnTimer() {
+void FireEffect :: OnTimer() {
   if (!skipTick) {
     FastLED.show();
 
@@ -25,7 +25,7 @@ void CFireEffect :: OnTimer() {
 };
 
 // -----------------------------------------------------
-void CFireEffect :: OnStart() {
+void FireEffect :: OnStart() {
   for (int pos = 0; pos < NUM_LEDS; ++pos) {
     leds[pos] = CRGB::Black;
   }
@@ -34,11 +34,11 @@ void CFireEffect :: OnStart() {
 }
 
 // -----------------------------------------------------
-CFireEffect :: ~CFireEffect() {
+FireEffect :: ~FireEffect() {
 }
 
 // -----------------------------------------------------
-void CFireEffect :: updateBottomLine() {
+void FireEffect :: updateBottomLine() {
   // Pointer to bottom line
   uint8_t *f = &field[NUM_LEDS - LED_WIDTH];
 
@@ -49,7 +49,7 @@ void CFireEffect :: updateBottomLine() {
 }
 
 // -----------------------------------------------------
-void CFireEffect :: updateField() {
+void FireEffect :: updateField() {
   // Pointer to current target line 
   uint8_t *tgt = field;
 
@@ -69,7 +69,7 @@ void CFireEffect :: updateField() {
 }
 
 // -----------------------------------------------------
-void CFireEffect :: updateLeds() {
+void FireEffect :: updateLeds() {
   CRGB *tgt = leds;
   uint8_t const *src = field;
   // difference between field positions to get next led value
@@ -86,7 +86,7 @@ void CFireEffect :: updateLeds() {
 }
 
 // -----------------------------------------------------
-const CRGB CFireEffect :: firePalette[256] = {
+const CRGB FireEffect :: firePalette[256] = {
   0x000000,
   0x000000,
   0x000000,

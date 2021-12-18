@@ -1,1 +1,2 @@
+cls
 idf.py build

@@ -6,7 +6,7 @@
 #include "led_effect.h"
 #include "FastLED.h"
 
-class CChristmasTree: public CLedEffect {
+class ChristmasTree: public LedEffect {
   private:
     static const uint8_t treeArch[];
     static const CRGB snowPalette[];
@@ -31,6 +31,6 @@ class CChristmasTree: public CLedEffect {
   public:
     virtual void OnStart();
     virtual void OnTimer();
-    virtual ~CChristmasTree();
+    virtual ~ChristmasTree();
 };
 #endif

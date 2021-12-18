@@ -24,7 +24,7 @@
 // Compressed tree
 // (3-bit pixel color type) | (count - 1)
 // count max = 32
-const uint8_t CChristmasTree :: treeArch[] = {
+const uint8_t ChristmasTree :: treeArch[] = {
   // 0 col
   M_TREE_CL_SPACE        | (25 - 1),
   M_TREE_CL_LIGHT_BRANCH | (2 - 1),
@@ -158,7 +158,7 @@ const uint8_t CChristmasTree :: treeArch[] = {
 };
 
 // -----------------------------------------------------
-const CRGB CChristmasTree :: snowPalette[] = {
+const CRGB ChristmasTree :: snowPalette[] = {
   0x010101,
   0x010101,
   0x010101,
@@ -188,7 +188,7 @@ const CRGB CChristmasTree :: snowPalette[] = {
 };
 
 // -----------------------------------------------------
-const CRGB CChristmasTree :: lightBranchPalette[] = {
+const CRGB ChristmasTree :: lightBranchPalette[] = {
   0x001300,
   0x001400,
   0x001500,
@@ -218,7 +218,7 @@ const CRGB CChristmasTree :: lightBranchPalette[] = {
 };
 
 // -----------------------------------------------------
-const CRGB CChristmasTree :: lightTopPalette[] = {
+const CRGB ChristmasTree :: lightTopPalette[] = {
   0x000300,
   0x000300,
   0x000300,
@@ -272,7 +272,7 @@ const CRGB CChristmasTree :: lightTopPalette[] = {
 };
 
 // -----------------------------------------------------
-void CChristmasTree :: updatePixels(std :: vector <CChristmasTree :: SEffectPixel> &vec, const CRGB *palette, int paletteSize) {
+void ChristmasTree :: updatePixels(std :: vector <ChristmasTree :: SEffectPixel> &vec, const CRGB *palette, int paletteSize) {
   for (auto p = vec.begin(); p != vec.end(); ++p) {
     leds[p->ledIndex] = palette[p->curColorIndex];
 
@@ -286,7 +286,7 @@ void CChristmasTree :: updatePixels(std :: vector <CChristmasTree :: SEffectPixe
 }
 
 // -----------------------------------------------------
-void CChristmasTree :: OnTimer() {
+void ChristmasTree :: OnTimer() {
   FastLED.show();
   // update dynamic pixels
 
@@ -310,7 +310,7 @@ void CChristmasTree :: OnTimer() {
 };
 
 // -----------------------------------------------------
-void CChristmasTree :: OnStart() {
+void ChristmasTree :: OnStart() {
 
   snowVec.reserve(32);
   lightBranchVec.reserve(30);
@@ -368,5 +368,5 @@ void CChristmasTree :: OnStart() {
 }
 
 // -----------------------------------------------------
-CChristmasTree :: ~CChristmasTree() {
+ChristmasTree :: ~ChristmasTree() {
 }

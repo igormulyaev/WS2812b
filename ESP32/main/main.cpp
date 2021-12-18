@@ -22,7 +22,7 @@ void app_main () {
 
   netBaseInit ();
 
-  CTestEffect testEffect;
+  TestEffect testEffect;
 
   ledEventLoop -> postStartEvent (&testEffect);
 

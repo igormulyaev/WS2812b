@@ -2,17 +2,17 @@
 #include "led_params.h"
 
 // -----------------------------------------------------
-const char* CTestEffect :: TAG = "test_led_effect";
+const char* TestEffect :: TAG = "test_led_effect";
 
 // -----------------------------------------------------
-void CTestEffect :: OnStart(ITimer* timer) {
+void TestEffect :: OnStart(ITimer* timer) {
   ESP_LOGI(TAG, "Start test effect");
   FastLED.clearData();
   FastLED.show();
 }
 
 // -----------------------------------------------------
-void CTestEffect :: OnInteract(const void* data) {
+void TestEffect :: OnInteract(const void* data) {
   if (data) {
     CRGB color;
     switch (*static_cast<const char*>(data)) {
@@ -40,9 +40,9 @@ void CTestEffect :: OnInteract(const void* data) {
 }
 
 // -----------------------------------------------------
-void CTestEffect :: OnTimer() {
+void TestEffect :: OnTimer() {
 }
 
 // -----------------------------------------------------
-CTestEffect :: ~CTestEffect() {
+TestEffect :: ~TestEffect() {
 }

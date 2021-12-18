@@ -1,23 +1,21 @@
 #include "net_base.h"
 
-//#include "sdkconfig.h"
-//#include "driver/gpio.h"
-//#include "esp_vfs_semihost.h"
-//#include "esp_vfs_fat.h"
 #include "esp_spiffs.h"
 #include "nvs_flash.h"
 #include "esp_netif.h"
 #include "esp_event.h"
 #include "esp_log.h"
 #include "mdns.h"
-//#include "lwip/apps/netbiosns.h"
 #include "protocol_examples_common.h"
+#include "http_server.h"
 
 #define MDNS_HOST_NAME "ws-esp"
 #define MDNS_INSTANCE "esp home web server"
 #define WEB_MOUNT_POINT "/www"
 
 static const char* TAG = "net_base";
+
+HttpServer* httpServer = NULL;
 
 // -------------------------------------------------------------------------------
 void initMdns() {
@@ -67,9 +65,12 @@ void netBaseInit () {
   ESP_ERROR_CHECK (esp_netif_init ());
   ESP_ERROR_CHECK (esp_event_loop_create_default ());
 
+  httpServer = new HttpServer;
+
   initMdns ();
 
   ESP_ERROR_CHECK (example_connect ());
   ESP_ERROR_CHECK (initFs ());
-//  ESP_ERROR_CHECK (startHttpServer (WEB_MOUNT_POINT));
+
+  ESP_ERROR_CHECK (httpServer -> startServer (WEB_MOUNT_POINT));
 }

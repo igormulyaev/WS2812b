@@ -7,10 +7,10 @@
 #include "FastLED.h"
 
 // Target frames per second
-#define STARS_STEPS (sizeof(CStars :: palette) / sizeof(CStars :: palette[0]))
+#define STARS_STEPS (sizeof(StarsEffect :: palette) / sizeof(StarsEffect :: palette[0]))
 #define STARS_COUNT 10
 
-class CStars: public CLedEffect {
+class StarsEffect: public LedEffect {
   private:
     static const CRGB palette[];
 
@@ -18,10 +18,10 @@ class CStars: public CLedEffect {
     std :: vector <int> step;
 
   public:
-    CStars();
+    StarsEffect();
 
     virtual void OnStart();
     virtual void OnTimer();
-    virtual ~CStars();
+    virtual ~StarsEffect();
 };
 #endif

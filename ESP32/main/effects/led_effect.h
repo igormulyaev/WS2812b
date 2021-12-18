@@ -8,12 +8,12 @@
 
 class ITimer;
 
-class CLedEffect {
+class LedEffect {
   public:
     virtual void OnStart(ITimer* timer) = 0;
     virtual void OnInteract(const void* data) = 0;
     virtual void OnTimer() = 0;
-    virtual ~CLedEffect() {};
+    virtual ~LedEffect() {};
 };
 
 #endif
