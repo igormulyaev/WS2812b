@@ -272,7 +272,17 @@ const CRGB ChristmasTree :: lightTopPalette[] = {
 };
 
 // -----------------------------------------------------
-void ChristmasTree :: updatePixels(std :: vector <ChristmasTree :: SEffectPixel> &vec, const CRGB *palette, int paletteSize) {
+const char* ChristmasTree :: name = "ChristmasTree";
+
+// -----------------------------------------------------
+const char* ChristmasTree :: getName() 
+{
+  return name;
+}
+
+// -----------------------------------------------------
+void ChristmasTree :: updatePixels(std :: vector <ChristmasTree :: SEffectPixel> &vec, const CRGB *palette, int paletteSize) 
+{
   for (auto p = vec.begin(); p != vec.end(); ++p) {
     leds[p->ledIndex] = palette[p->curColorIndex];
 
@@ -286,7 +296,8 @@ void ChristmasTree :: updatePixels(std :: vector <ChristmasTree :: SEffectPixel>
 }
 
 // -----------------------------------------------------
-void ChristmasTree :: OnTimer() {
+void ChristmasTree :: OnTimer() 
+{
   FastLED.show();
   // update dynamic pixels
 
@@ -310,8 +321,8 @@ void ChristmasTree :: OnTimer() {
 };
 
 // -----------------------------------------------------
-void ChristmasTree :: OnStart() {
-
+void ChristmasTree :: OnStart() 
+{
   snowVec.reserve(32);
   lightBranchVec.reserve(30);
   lightTopVec.reserve(8);
@@ -368,5 +379,6 @@ void ChristmasTree :: OnStart() {
 }
 
 // -----------------------------------------------------
-ChristmasTree :: ~ChristmasTree() {
+ChristmasTree :: ~ChristmasTree() 
+{
 }

@@ -1,4 +1,5 @@
 #include "led_base.h"
+#include "effects/test_effect.h"
 #include "led_event_loop.h"
 
 static const char* TAG = "led_base";
@@ -6,6 +7,8 @@ static const char* TAG = "led_base";
 CRGB leds[NUM_LEDS];
 
 LedEventLoop* ledEventLoop = 0;
+
+TestEffect* testEffect = 0;
 
 // -------------------------------------------------------------------------------
 void ledBaseInit () {
@@ -15,6 +18,8 @@ void ledBaseInit () {
   FastLED.clearData ();
 
   ledEventLoop = new LedEventLoop;
+
+  testEffect = new TestEffect;
 
   ESP_LOGI (TAG, "End init FastLED");
 }

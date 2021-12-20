@@ -6,15 +6,20 @@
 
 // Target frames per second
 
-class TestEffect: public LedEffect {
-  private:
-    static const char* TAG;
+class TestEffect: public LedEffect 
+{
   public:
     TestEffect() {}
+    virtual ~TestEffect();
 
     virtual void OnStart(ITimer* timer);
     virtual void OnInteract(const void* data);
     virtual void OnTimer();
-    virtual ~TestEffect();
+    virtual const char* getName();
+
+    static const char* const name;
+
+  private:
+    static const char* TAG;
 };
 #endif

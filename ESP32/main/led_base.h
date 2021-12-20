@@ -7,8 +7,10 @@
 extern CRGB leds[NUM_LEDS];
 
 class LedEventLoop;
+class TestEffect;
 
 extern LedEventLoop* ledEventLoop;
+extern TestEffect* testEffect;
 
 void ledBaseInit ();
 

@@ -31,6 +31,9 @@ class ChristmasTree: public LedEffect {
   public:
     virtual void OnStart();
     virtual void OnTimer();
+    virtual const char* getName();
     virtual ~ChristmasTree();
+
+    static const char* name;
 };
 #endif

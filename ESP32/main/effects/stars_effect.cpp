@@ -79,6 +79,16 @@ const CRGB StarsEffect :: palette[] = {
   0x000100,
   0x000100
 };
+
+// -----------------------------------------------------
+const char* StarsEffect :: name = "StarsEffect";
+
+// -----------------------------------------------------
+const char* StarsEffect :: getName() 
+{
+  return name;
+}
+
 // -----------------------------------------------------
 StarsEffect :: StarsEffect(): pos(STARS_COUNT), step(STARS_COUNT) {
 }

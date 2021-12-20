@@ -19,9 +19,12 @@ class StarsEffect: public LedEffect {
 
   public:
     StarsEffect();
+    virtual ~StarsEffect();
 
     virtual void OnStart();
     virtual void OnTimer();
-    virtual ~StarsEffect();
+    virtual const char* getName();
+
+    static const char* name;
 };
 #endif

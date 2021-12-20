@@ -8,7 +8,8 @@ idf_component_register (
     "effects/stars_effect.cpp"
     "effects/test_effect.cpp"
     "net_base.cpp"
-    "http_server.cpp"
+    "http_server/http_server.cpp"
+    "http_server/hs_test_led.cpp"
   INCLUDE_DIRS 
     "."
 )

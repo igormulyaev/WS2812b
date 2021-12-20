@@ -5,6 +5,15 @@
 const char* TestEffect :: TAG = "test_led_effect";
 
 // -----------------------------------------------------
+const char* const TestEffect :: name = "TestEffect";
+
+// -----------------------------------------------------
+const char* TestEffect :: getName() 
+{
+  return name;
+}
+
+// -----------------------------------------------------
 void TestEffect :: OnStart(ITimer* timer) {
   ESP_LOGI(TAG, "Start test effect");
   FastLED.clearData();

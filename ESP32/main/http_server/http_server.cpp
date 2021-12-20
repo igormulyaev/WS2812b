@@ -1,14 +1,28 @@
 ﻿#include "http_server.h"
 #include "esp_log.h"
-#include "cJSON.h"
 #include <fcntl.h>
 
-static const char* TAG = "http_server";
+const char* const HttpServer :: TAG = "http_server";
 
 // -----------------------------------------------------
-HttpServer :: HttpServer () : 
-  server (NULL)
+HttpServer :: HttpServer (const char* inBasePath) : 
+  server (NULL), basePath (inBasePath)
 {
+  // Starting server
+  httpd_config_t config = HTTPD_DEFAULT_CONFIG();
+  config.uri_match_fn = httpd_uri_match_wildcard;
+
+  ESP_LOGI(TAG, "Starting HTTP Server");
+  ESP_ERROR_CHECK (httpd_start (&server, &config));
+  ESP_LOGI(TAG, "HTTP Server started");
+
+  // Add URI handlers
+  registerUri ("/api/v1/system/info", HTTP_GET, systemInfoGetUriHandler);
+  registerUri ("/api/test_led", HTTP_GET, testLedGetUriHandler);
+  registerUri ("/api/test_led", HTTP_POST, testLedPostUriHandler);
+
+  // Other web server files 
+  registerUri ("/*", HTTP_GET, commonGetUriHandler);
 }
 
 // -----------------------------------------------------
@@ -21,80 +35,45 @@ HttpServer :: ~HttpServer ()
 }
 
 // -----------------------------------------------------
-esp_err_t HttpServer :: startServer (const char* inBasePath) 
+void HttpServer :: registerUri (const char* p_uri, 
+                                     httpd_method_t p_method, 
+                                     esp_err_t (*p_handler)(httpd_req_t *r))
 {
-  if (server) {
-    return ESP_FAIL;
-    ESP_LOGE (TAG, "Server always started");
-  }
-
-  basePath = inBasePath;
-  
-  // Starting server
-  httpd_config_t config = HTTPD_DEFAULT_CONFIG();
-  config.uri_match_fn = httpd_uri_match_wildcard;
-
-  ESP_LOGI(TAG, "Starting HTTP Server");
-  ESP_ERROR_CHECK (httpd_start (&server, &config));
-  ESP_LOGI(TAG, "HTTP Server started");
-
-  // Add URI handlers
-  // System info
-  httpd_uri_t systemInfoGetUri = {
-    .uri = "/api/v1/system/info",
-    .method = HTTP_GET,
-    .handler = HttpServer :: systemInfoGetHandler,
+  httpd_uri_t uriConfig = {
+    .uri = p_uri,
+    .method = p_method,
+    .handler = p_handler,
     .user_ctx = static_cast <void*> (this)
   };
-  ESP_ERROR_CHECK (httpd_register_uri_handler (server, &systemInfoGetUri));
-
-  // Other web server files 
-  httpd_uri_t commonGetUri = {
-      .uri = "/*",
-      .method = HTTP_GET,
-      .handler = commonGetHandler,
-      .user_ctx = static_cast <void*> (this)
-  };
-  ESP_ERROR_CHECK (httpd_register_uri_handler(server, &commonGetUri));
-
-  return ESP_OK;
+  ESP_ERROR_CHECK (httpd_register_uri_handler (server, &uriConfig));
 }
 
 // -----------------------------------------------------
-esp_err_t HttpServer :: systemInfoGetHandler (httpd_req_t *req)
+esp_err_t HttpServer :: systemInfoGetUriHandler (httpd_req_t *req)
 {
   ESP_LOGI (TAG, "Get version");
+
+  HttpServer* srv = static_cast <HttpServer*> (req -> user_ctx);
   
   httpd_resp_set_type (req, "application/json");
 
   esp_chip_info_t chip_info;
   esp_chip_info(&chip_info);
 
-  cJSON *root = cJSON_CreateObject();
-  cJSON_AddStringToObject(root, "version", IDF_VER);
-  cJSON_AddNumberToObject(root, "cores", chip_info.cores);
+  char *sys_info = srv -> buf;
 
-  const char *sys_info = cJSON_Print(root);
-  httpd_resp_sendstr(req, sys_info);
-  free((void *)sys_info);
-
-  cJSON_Delete(root);
-  return ESP_OK;
+  sprintf (sys_info, "{version: \"%s\", cores: %d}", IDF_VER, chip_info.cores);
+  return httpd_resp_sendstr(req, sys_info);
 }
 
 // -----------------------------------------------------
-esp_err_t HttpServer :: commonGetHandler (httpd_req_t *req)
-{
-  HttpServer* srv = static_cast <HttpServer*> (req -> user_ctx);
-  return srv -> commonGetExec (req);
-}
-
-// -----------------------------------------------------
-esp_err_t HttpServer :: commonGetExec (httpd_req_t *req)
+esp_err_t HttpServer :: commonGetUriHandler (httpd_req_t *req)
 {
   ESP_LOGI (TAG, "Get common: %s", req -> uri);
 
-  std::string filePath = basePath;
+  HttpServer* srv = static_cast <HttpServer*> (req -> user_ctx);
+
+  std::string filePath = srv -> basePath;
 
   filePath.append (req -> uri);
 
@@ -113,7 +92,7 @@ esp_err_t HttpServer :: commonGetExec (httpd_req_t *req)
 
   ESP_ERROR_CHECK (setContentTypeFromFileName (req, filePath));
 
-  char *chunk = buf;
+  char *chunk = srv -> buf;
   ssize_t read_bytes;
   do {
     // Read file in chunks into the scratch buffer

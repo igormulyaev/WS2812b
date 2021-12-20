@@ -7,7 +7,7 @@
 #include "esp_log.h"
 #include "mdns.h"
 #include "protocol_examples_common.h"
-#include "http_server.h"
+#include "http_server/http_server.h"
 
 #define MDNS_HOST_NAME "ws-esp"
 #define MDNS_INSTANCE "esp home web server"
@@ -65,12 +65,10 @@ void netBaseInit () {
   ESP_ERROR_CHECK (esp_netif_init ());
   ESP_ERROR_CHECK (esp_event_loop_create_default ());
 
-  httpServer = new HttpServer;
-
   initMdns ();
 
   ESP_ERROR_CHECK (example_connect ());
   ESP_ERROR_CHECK (initFs ());
 
-  ESP_ERROR_CHECK (httpServer -> startServer (WEB_MOUNT_POINT));
+  httpServer = new HttpServer (WEB_MOUNT_POINT);
 }
