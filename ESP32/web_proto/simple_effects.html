@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang=en>
+<head>
+  <meta charset=utf-8>
+  <title>Simple effects</title>
+</head>
+<body>
+  <div>
+    Simple effects
+  </div>
+  <p>
+    <input type="button" id="idBtnChristmasTree" value="Ёлка" onclick="sendCommand('ChristmasTree')" disabled><br>
+    <input type="button" id="idBtnStars" value="Звезды" onclick="sendCommand('Stars')" disabled>
+  </p>
+  <a href="index.html">Home</a>
+
+  <script>
+    // -------------------------------------------------------
+    async function sendCommand(command) 
+    {
+      let fetchOptions = (command == null)? 
+        null: {
+        method: 'POST',
+        headers: {
+         'Content-Type': 'application/json;charset=utf-8'
+        },
+        body: JSON.stringify({ cmd:command }),
+      };
+
+      let response = await fetch('/api/simple_effects', fetchOptions);
+
+      let result = await response.json();
+
+      let effect = result.effect;
+
+      document.getElementById('idBtnChristmasTree').disabled = (effect == "ChristmasTree");
+      document.getElementById('idBtnStars').disabled = (effect == "Stars");
+    }
+    // -------------------------------------------------------
+    window.onload = function() 
+    {
+      sendCommand(null);
+    }
+  </script>
+</body>
+</html>

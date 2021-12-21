@@ -66,4 +66,15 @@
       'state' => $drawState
     ));
   }
+  else if ($req === 'simple_effects') {
+    $effect = '';
+
+    if ($method === 'POST') {
+      $effect = $jsonData['cmd'];
+    }
+
+    echo json_encode(array(
+      'effect' => $effect
+    ));
+  }
 ?>

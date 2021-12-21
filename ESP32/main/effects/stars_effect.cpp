@@ -81,7 +81,7 @@ const CRGB StarsEffect :: palette[] = {
 };
 
 // -----------------------------------------------------
-const char* StarsEffect :: name = "StarsEffect";
+const char* StarsEffect :: name = "Stars";
 
 // -----------------------------------------------------
 const char* StarsEffect :: getName() 
