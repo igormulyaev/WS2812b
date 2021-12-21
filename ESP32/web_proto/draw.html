@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang=en>
+<head>
+  <meta charset=utf-8>
+  <title>Draw!</title>
+</head>
+<body>
+  <div>
+    Draw!
+  </div>
+
+  <form name="colorInput" action="" onsubmit="return applyInput(this, 'add')">
+    <p>
+      <input type="button" id="idBtnOn" value="Включить" onclick="applyInput(this.form, 'on')" disabled>
+      <input type="button" id="idBtnOff" value="Выключить" onclick="applyInput(this.form, 'off')" disabled>
+    </p>
+    <p>
+      Всего: <span id="idCountValue"> </span>
+    </p>
+    <p>
+      <input type="text" size="3" id="idEditR" name="R" value="0" disabled> R value<br>
+      <input type="text" size="3" id="idEditG" name="G" value="0" disabled> G value<br>
+      <input type="text" size="3" id="idEditB" name="B" value="0" disabled> B value
+    </p>
+    <p>
+      <input type="text" size="3" id="idEditCnt" name="cnt" value="1" disabled> Количество
+    </p>
+    <p>
+      <input type="submit" id="idBtnAdd" value="Добавить" disabled>
+      <input type="button" id="idBtnDel" value="Удалить" onclick="applyInput(this.form, 'del')" disabled>
+      <input type="button" id="idBtnClr" value="Очистить" onclick="applyInput(this.form, 'clr')" disabled>
+    </p>
+    <a href="index.html">Home</a>
+  </form>
+  <script>
+    // -------------------------------------------------------
+    function applyInput(form, command) {
+      let r = Number(form.R.value);
+      let g = Number(form.G.value);
+      let b = Number(form.B.value);
+      let cnt = Number(form.cnt.value);
+      let ok = false;
+      let val = '';
+ 
+      switch (command) {
+        case 'add':
+          if (0 <= r && r <= 255 &&
+              0 <= g && g <= 255 &&
+              0 <= b && b <= 255 &&
+              1 <= cnt && cnt <= 255) {
+            ok = true;
+            val = cnt.toString(16).padStart(2, '0') + 
+                  r.toString(16).padStart(2, '0') + 
+                  g.toString(16).padStart(2, '0') + 
+                  b.toString(16).padStart(2, '0');
+          }
+          break;
+        case 'del':
+          if (1 <= cnt && cnt <= 255) {
+            ok = true;
+            val = cnt;
+          }
+          break;
+        case 'clr':
+        case 'on':
+        case 'off':
+          ok = true;
+          break;
+      }
+
+      if (ok) {
+        sendCommand({ cmd:command, val:val });
+      }
+      else {
+        alert("Неверные значения");
+      }
+      return false;
+    }
+
+    // -------------------------------------------------------
+    async function sendCommand(values) {
+      let fetchOptions = (values == null)? 
+        null: {
+        method: 'POST',
+        headers: {
+         'Content-Type': 'application/json;charset=utf-8'
+        },
+        body: JSON.stringify(values),
+      };
+
+      let response = await fetch('/api/draw', fetchOptions);
+
+      let result = await response.json();
+
+      let isOn = (result.state == 1);
+
+      document.getElementById('idBtnOn').disabled = isOn;
+      document.getElementById('idBtnOff').disabled = !isOn;
+      document.getElementById('idEditR').disabled = !isOn;
+      document.getElementById('idEditG').disabled = !isOn;
+      document.getElementById('idEditB').disabled = !isOn;
+      document.getElementById('idEditCnt').disabled = !isOn;
+      document.getElementById('idBtnAdd').disabled = !isOn;
+      document.getElementById('idBtnDel').disabled = !isOn;
+      document.getElementById('idBtnClr').disabled = !isOn;
+
+      document.getElementById('idCountValue').textContent = result.cnt;
+    }
+    // -------------------------------------------------------
+    window.onload = function() {
+      sendCommand(null);
+    }
+  </script>
+</body>
+</html>
