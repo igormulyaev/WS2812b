@@ -15,7 +15,7 @@ class LedEffect {
     virtual void OnStart(ITimer* timer) = 0;
     virtual void OnInteract(const void* data) = 0;
     virtual void OnTimer() = 0;
-    virtual const char* getName() = 0;
+    virtual const char* getName() const = 0;
 };
 
 #endif

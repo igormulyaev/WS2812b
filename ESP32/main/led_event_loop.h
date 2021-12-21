@@ -22,25 +22,6 @@ enum {
 };
 
 class LedEventLoop : public ITimer {
-  private:
-    LedEventLoop(const LedEventLoop &) = delete;
-    LedEventLoop & operator=(const LedEventLoop &) = delete;
-
-    esp_event_loop_handle_t loopHandle;
-    esp_timer_handle_t ledRefreshTimer;
-
-    LedEffect* ledEffect;
-
-    static void startEventHandler(void* handler_args, esp_event_base_t base, int32_t id, void* event_data);
-    static void timerEventHandler(void* handler_args, esp_event_base_t base, int32_t id, void* event_data);
-    static void interactEventHandler(void* handler_args, esp_event_base_t base, int32_t id, void* event_data);
-
-    static void refreshTimerHandle(void* timer_data);
-
-    void startEventAction(void* event_data);
-    void timerEventAction();
-    void interactEventAction(void* event_data);
-
   public:
     LedEventLoop();
     ~LedEventLoop();
@@ -49,7 +30,29 @@ class LedEventLoop : public ITimer {
     void postInteractEvent(void* data, size_t size);
 
     virtual void StartTimer(uint64_t period);
-    
+
+    const LedEffect* getLedEffect() const { return ledEffect; }
+
+    void startEventAction (void* event_data);
+    void interactEventAction (void* event_data);
+
+  private:
+    esp_event_loop_handle_t loopHandle;
+    esp_timer_handle_t ledRefreshTimer;
+
+    LedEffect* ledEffect;
+
+    static void startEventHandler (void* handler_args, esp_event_base_t base, int32_t id, void* event_data);
+    static void timerEventHandler (void* handler_args, esp_event_base_t base, int32_t id, void* event_data);
+    static void interactEventHandler (void* handler_args, esp_event_base_t base, int32_t id, void* event_data);
+
+    static void refreshTimerHandle (void* timer_data);
+
+    void timerEventAction();
+
+    LedEventLoop(const LedEventLoop &) = delete;
+    LedEventLoop & operator=(const LedEventLoop &) = delete;
+
 };
 
 // ---------------------------------------------------

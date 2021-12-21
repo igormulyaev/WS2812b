@@ -36,8 +36,8 @@ HttpServer :: ~HttpServer ()
 
 // -----------------------------------------------------
 void HttpServer :: registerUri (const char* p_uri, 
-                                     httpd_method_t p_method, 
-                                     esp_err_t (*p_handler)(httpd_req_t *r))
+                                httpd_method_t p_method, 
+                                esp_err_t (*p_handler)(httpd_req_t *r))
 {
   httpd_uri_t uriConfig = {
     .uri = p_uri,
@@ -49,7 +49,7 @@ void HttpServer :: registerUri (const char* p_uri,
 }
 
 // -----------------------------------------------------
-esp_err_t HttpServer :: systemInfoGetUriHandler (httpd_req_t *req)
+esp_err_t HttpServer :: systemInfoGetUriHandler (httpd_req_t* req)
 {
   ESP_LOGI (TAG, "Get version");
 
@@ -67,7 +67,7 @@ esp_err_t HttpServer :: systemInfoGetUriHandler (httpd_req_t *req)
 }
 
 // -----------------------------------------------------
-esp_err_t HttpServer :: commonGetUriHandler (httpd_req_t *req)
+esp_err_t HttpServer :: commonGetUriHandler (httpd_req_t* req)
 {
   ESP_LOGI (TAG, "Get common: %s", req -> uri);
 
@@ -124,7 +124,7 @@ esp_err_t HttpServer :: commonGetUriHandler (httpd_req_t *req)
 
 // -----------------------------------------------------
 // Set HTTP response content type according to file extension
-esp_err_t HttpServer :: setContentTypeFromFileName (httpd_req_t *req, const std::string &filePath)
+esp_err_t HttpServer :: setContentTypeFromFileName (httpd_req_t* req, const std::string &filePath)
 {
   const char *type = "text/plain";
 
@@ -149,4 +149,30 @@ esp_err_t HttpServer :: setContentTypeFromFileName (httpd_req_t *req, const std:
   ESP_LOGI (TAG, "MIME type: %s", type);
 
   return httpd_resp_set_type (req, type);
+}
+
+// -----------------------------------------------------
+// Read POST data to buf
+esp_err_t HttpServer :: readPostData (httpd_req_t* req)
+{
+  int total_len = req -> content_len;
+  int cur_len = 0;
+  int received = 0;
+
+  if (total_len >= SCRATCH_BUFSIZE) {
+    httpd_resp_send_err(req, HTTPD_500_INTERNAL_SERVER_ERROR, "content too long");
+    return ESP_FAIL;
+  }
+
+  while (cur_len < total_len) {
+    received = httpd_req_recv (req, buf + cur_len, total_len);
+    if (received <= 0) {
+      httpd_resp_send_err(req, HTTPD_500_INTERNAL_SERVER_ERROR, "Failed to post control value");
+      return ESP_FAIL;
+    }
+    cur_len += received;
+  }
+
+  buf[total_len] = '\0';
+  return ESP_OK;
 }

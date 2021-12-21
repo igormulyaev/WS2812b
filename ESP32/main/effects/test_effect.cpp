@@ -8,7 +8,7 @@ const char* TestEffect :: TAG = "test_led_effect";
 const char* const TestEffect :: name = "TestEffect";
 
 // -----------------------------------------------------
-const char* TestEffect :: getName() 
+const char* TestEffect :: getName() const
 {
   return name;
 }

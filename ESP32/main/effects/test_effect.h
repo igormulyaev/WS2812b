@@ -15,7 +15,7 @@ class TestEffect: public LedEffect
     virtual void OnStart(ITimer* timer);
     virtual void OnInteract(const void* data);
     virtual void OnTimer();
-    virtual const char* getName();
+    virtual const char* getName() const;
 
     static const char* const name;
 
