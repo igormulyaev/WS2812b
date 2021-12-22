@@ -23,6 +23,10 @@ class HttpServer
     static esp_err_t testLedPostUriHandler (httpd_req_t* req);
     esp_err_t testLedExecute (bool isPost, httpd_req_t* req);
 
+    static esp_err_t simpleEffectsGetUriHandler (httpd_req_t* req);
+    static esp_err_t simpleEffectsPostUriHandler (httpd_req_t* req);
+    esp_err_t simpleEffectsExecute (bool isPost, httpd_req_t* req);
+
     static esp_err_t setContentTypeFromFileName (httpd_req_t* req, const std::string &filePath);
     esp_err_t readPostData (httpd_req_t* req);
 

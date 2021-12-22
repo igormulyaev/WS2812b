@@ -9,12 +9,14 @@
     Simple effects
   </div>
   <p>
-    <input type="button" id="idBtnChristmasTree" value="Ёлка" onclick="sendCommand('ChristmasTree')" disabled><br>
-    <input type="button" id="idBtnStars" value="Звезды" onclick="sendCommand('Stars')" disabled>
+    <input type="button" id="idBtnChristmasTree" value="Ёлка" onclick="sendCommand(christmasTree)" disabled><br>
+    <input type="button" id="idBtnStars" value="Звезды" onclick="sendCommand(stars)" disabled>
   </p>
   <a href="index.html">Home</a>
 
   <script>
+    const christmasTree = 'ChristmasTree';
+    const stars = 'Stars';
     // -------------------------------------------------------
     async function sendCommand(command) 
     {
@@ -33,8 +35,8 @@
 
       let effect = result.effect;
 
-      document.getElementById('idBtnChristmasTree').disabled = (effect == "ChristmasTree");
-      document.getElementById('idBtnStars').disabled = (effect == "Stars");
+      document.getElementById('idBtnChristmasTree').disabled = (effect == christmasTree);
+      document.getElementById('idBtnStars').disabled = (effect == stars);
     }
     // -------------------------------------------------------
     window.onload = function() 

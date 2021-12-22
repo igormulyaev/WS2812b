@@ -65,6 +65,7 @@ esp_err_t HttpServer :: testLedExecute (bool isPost, httpd_req_t* req)
   httpd_resp_set_type (req, "application/json");
 
   sprintf (buf, "{\"state\": %d}", isTestEffectOn);
+  ESP_LOGI (TAG, "Return = \"%s\"", buf);
 
   return httpd_resp_sendstr(req, buf);
 }

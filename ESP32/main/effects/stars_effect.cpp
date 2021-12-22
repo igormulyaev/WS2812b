@@ -1,5 +1,9 @@
 ﻿#include "stars_effect.h"
 #include "led_base.h"
+#include "timer_interface.h"
+
+// Refresh frequency, Hz
+#define M_REFRESH_FREQ 50
 
 // -----------------------------------------------------
 const CRGB StarsEffect :: palette[] = {
@@ -81,20 +85,25 @@ const CRGB StarsEffect :: palette[] = {
 };
 
 // -----------------------------------------------------
-const char* StarsEffect :: name = "Stars";
+const char* StarsEffect :: TAG = "stars_effect";
+
+const char* const StarsEffect :: name = "Stars";
 
 // -----------------------------------------------------
-const char* StarsEffect :: getName() 
+const char* StarsEffect :: getName() const
 {
   return name;
 }
 
 // -----------------------------------------------------
-StarsEffect :: StarsEffect(): pos(STARS_COUNT), step(STARS_COUNT) {
+StarsEffect :: StarsEffect(): 
+  pos(STARS_COUNT), step(STARS_COUNT) 
+{
 }
 
 // -----------------------------------------------------
-void StarsEffect :: OnTimer() {
+void StarsEffect :: OnTimer()
+{
   // Update colors for current stars
   for (int starN = 0; starN < STARS_COUNT; ++starN) {
     leds[pos[starN]] = palette[step[starN]];
@@ -121,15 +130,20 @@ void StarsEffect :: OnTimer() {
 };
 
 // -----------------------------------------------------
-void StarsEffect :: OnStart() {
+void StarsEffect :: OnStart (ITimer* timer)
+{
+  ESP_LOGI(TAG, "Start");
   FastLED.clearData();
 
   for (int starN = 0; starN < STARS_COUNT; ++starN) {
     pos[starN] = esp_random() % NUM_LEDS;
     step[starN] = starN * STARS_STEPS / STARS_COUNT;
   }
+
+  timer -> startTimer (1000000 / M_REFRESH_FREQ);
 }
 
 // -----------------------------------------------------
-StarsEffect :: ~StarsEffect() {
+StarsEffect :: ~StarsEffect()
+{
 }

@@ -6,7 +6,19 @@
 #include "led_effect.h"
 #include "FastLED.h"
 
-class ChristmasTree: public LedEffect {
+class ChristmasTree: public LedEffect 
+{
+  public:
+    ChristmasTree() {}
+    virtual ~ChristmasTree();
+
+    virtual void OnStart(ITimer* timer);
+    virtual void OnInteract(const void* data) {};
+    virtual void OnTimer();
+    virtual const char* getName() const;
+
+    static const char* const name;
+
   private:
     static const uint8_t treeArch[];
     static const CRGB snowPalette[];
@@ -27,13 +39,7 @@ class ChristmasTree: public LedEffect {
     int lightTopTgtColorIndex;
 
     static void updatePixels(std :: vector <SEffectPixel> &vec, const CRGB *palette, int paletteSize);
-
-  public:
-    virtual void OnStart();
-    virtual void OnTimer();
-    virtual const char* getName();
-    virtual ~ChristmasTree();
-
-    static const char* name;
+    static const char* TAG;
 };
+
 #endif

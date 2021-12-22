@@ -15,7 +15,7 @@ const char* TestEffect :: getName() const
 
 // -----------------------------------------------------
 void TestEffect :: OnStart(ITimer* timer) {
-  ESP_LOGI(TAG, "Start test effect");
+  ESP_LOGI(TAG, "Start");
   FastLED.clearData();
   FastLED.show();
 }

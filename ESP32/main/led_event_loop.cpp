@@ -38,7 +38,7 @@ void LedEventLoop :: refreshTimerHandle (void* timer_args) {
 // -----------------------------------------------------
 void LedEventLoop :: startEventAction (void* event_data) {
   if (event_data) {
-    StartTimer (0);
+    startTimer (0);
 
     ledEffect = *static_cast <LedEffect**> (event_data);
     if (ledEffect) {
@@ -100,7 +100,7 @@ LedEventLoop :: LedEventLoop () {
 }
 
 // -----------------------------------------------------
-void LedEventLoop :: StartTimer (uint64_t period) {
+void LedEventLoop :: startTimer (uint64_t period) {
   if (esp_timer_is_active (ledRefreshTimer)) {
     ESP_LOGI (TAG, "stop timer");
     ESP_ERROR_CHECK (esp_timer_stop (ledRefreshTimer));

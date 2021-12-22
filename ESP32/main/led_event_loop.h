@@ -29,7 +29,7 @@ class LedEventLoop : public ITimer {
     void postStartEvent(LedEffect* effect);
     void postInteractEvent(void* data, size_t size);
 
-    virtual void StartTimer(uint64_t period);
+    virtual void startTimer(uint64_t period);
 
     const LedEffect* getLedEffect() const { return ledEffect; }
 

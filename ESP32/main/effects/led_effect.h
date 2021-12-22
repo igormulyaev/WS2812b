@@ -4,8 +4,6 @@
 
 // Basic Class for LED effects
 
-//#define M_INTERACT_DATA_LENGHT 16
-
 class ITimer;
 
 class LedEffect {

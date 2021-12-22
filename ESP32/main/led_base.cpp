@@ -1,14 +1,18 @@
 #include "led_base.h"
 #include "effects/test_effect.h"
+#include "effects/christmas_tree.h"
+#include "effects/stars_effect.h"
 #include "led_event_loop.h"
 
 static const char* TAG = "led_base";
 
 CRGB leds[NUM_LEDS];
 
-LedEventLoop* ledEventLoop = 0;
+LedEventLoop* ledEventLoop = NULL;
 
-TestEffect* testEffect = 0;
+TestEffect* testEffect = NULL;
+ChristmasTree* christmasTree = NULL;
+StarsEffect* starsEffect = NULL;
 
 // -------------------------------------------------------------------------------
 void ledBaseInit () {
@@ -20,6 +24,8 @@ void ledBaseInit () {
   ledEventLoop = new LedEventLoop;
 
   testEffect = new TestEffect;
+  christmasTree = new ChristmasTree;
+  starsEffect = new StarsEffect;
 
   ESP_LOGI (TAG, "End init FastLED");
 }

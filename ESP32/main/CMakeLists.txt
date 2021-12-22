@@ -10,6 +10,7 @@ idf_component_register (
     "net_base.cpp"
     "http_server/http_server.cpp"
     "http_server/hs_test_led.cpp"
+    "http_server/hs_simple_effects.cpp"
   INCLUDE_DIRS 
     "."
 )

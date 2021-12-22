@@ -1,6 +1,9 @@
 ﻿#include "christmas_tree.h"
 #include "led_base.h"
+#include "timer_interface.h"
 
+// Refresh frequency, Hz
+#define M_REFRESH_FREQ 50
 // Black background
 #define M_TREE_CL_SPACE (1 << 5)
 // Sparks of snow
@@ -272,16 +275,18 @@ const CRGB ChristmasTree :: lightTopPalette[] = {
 };
 
 // -----------------------------------------------------
-const char* ChristmasTree :: name = "ChristmasTree";
+const char* ChristmasTree :: TAG = "christmas_tree";
+
+const char* const ChristmasTree :: name = "ChristmasTree";
 
 // -----------------------------------------------------
-const char* ChristmasTree :: getName() 
+const char* ChristmasTree :: getName() const
 {
   return name;
 }
 
 // -----------------------------------------------------
-void ChristmasTree :: updatePixels(std :: vector <ChristmasTree :: SEffectPixel> &vec, const CRGB *palette, int paletteSize) 
+void ChristmasTree :: updatePixels (std :: vector <ChristmasTree :: SEffectPixel> &vec, const CRGB *palette, int paletteSize) 
 {
   for (auto p = vec.begin(); p != vec.end(); ++p) {
     leds[p->ledIndex] = palette[p->curColorIndex];
@@ -321,8 +326,10 @@ void ChristmasTree :: OnTimer()
 };
 
 // -----------------------------------------------------
-void ChristmasTree :: OnStart() 
+void ChristmasTree :: OnStart (ITimer* timer)
 {
+  ESP_LOGI(TAG, "Start");
+
   snowVec.reserve(32);
   lightBranchVec.reserve(30);
   lightTopVec.reserve(8);
@@ -376,6 +383,8 @@ void ChristmasTree :: OnStart()
   for (; pos < NUM_LEDS; ++pos) {
     leds[pos] = CRGB::Black;
   }
+
+  timer -> startTimer (1000000 / M_REFRESH_FREQ);
 }
 
 // -----------------------------------------------------

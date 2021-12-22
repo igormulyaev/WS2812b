@@ -20,6 +20,8 @@ HttpServer :: HttpServer (const char* inBasePath) :
   registerUri ("/api/v1/system/info", HTTP_GET, systemInfoGetUriHandler);
   registerUri ("/api/test_led", HTTP_GET, testLedGetUriHandler);
   registerUri ("/api/test_led", HTTP_POST, testLedPostUriHandler);
+  registerUri ("/api/simple_effects", HTTP_GET, simpleEffectsGetUriHandler);
+  registerUri ("/api/simple_effects", HTTP_POST, simpleEffectsPostUriHandler);
 
   // Other web server files 
   registerUri ("/*", HTTP_GET, commonGetUriHandler);
