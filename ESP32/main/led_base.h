@@ -8,12 +8,12 @@ extern CRGB leds[NUM_LEDS];
 
 class LedEventLoop;
 class TestEffect;
-class ChristmasTree;
+class ChristmasTreeEffect;
 class StarsEffect;
 
 extern LedEventLoop* ledEventLoop;
 extern TestEffect* testEffect;
-extern ChristmasTree* christmasTree;
+extern ChristmasTreeEffect* christmasTreeEffect;
 extern StarsEffect* starsEffect;
 
 void ledBaseInit ();

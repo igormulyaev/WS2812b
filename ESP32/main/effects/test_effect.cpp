@@ -2,10 +2,10 @@
 #include "led_params.h"
 
 // -----------------------------------------------------
-const char* TestEffect :: TAG = "test_led_effect";
+const char* TestEffect :: TAG = "test_effect";
 
 // -----------------------------------------------------
-const char* const TestEffect :: name = "TestEffect";
+const char* const TestEffect :: name = "Test";
 
 // -----------------------------------------------------
 const char* TestEffect :: getName() const

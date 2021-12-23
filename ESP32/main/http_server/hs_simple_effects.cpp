@@ -2,7 +2,7 @@
 #include "esp_log.h"
 #include "led_base.h"
 #include "led_event_loop.h"
-#include "effects/christmas_tree.h"
+#include "effects/christmas_tree_effect.h"
 #include "effects/stars_effect.h"
 
 // -----------------------------------------------------
@@ -59,15 +59,16 @@ esp_err_t HttpServer :: simpleEffectsExecute (bool isPost, httpd_req_t* req)
     ESP_LOGI (TAG, "Cmd effect = \"%s\"", cmdEffect);
 
     LedEffect* newEffect = NULL;
-    if (strcmp (cmdEffect, ChristmasTree :: name) == 0) {
-      newEffect = christmasTree;
+
+    if (strcmp (cmdEffect, ChristmasTreeEffect :: name) == 0) {
+      newEffect = christmasTreeEffect;
     }
     else if (strcmp (cmdEffect, StarsEffect :: name) == 0) {
       newEffect = starsEffect;
     }
     if (newEffect) {
-      effectName = cmdEffect;
-      ESP_LOGI (TAG, "Start effect \"%s\"", cmdEffect);
+      effectName = newEffect -> getName();
+      ESP_LOGI (TAG, "Start effect \"%s\"", effectName);
       ledEventLoop -> startEventAction (&newEffect);
     }
   }

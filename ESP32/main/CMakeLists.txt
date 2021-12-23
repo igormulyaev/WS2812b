@@ -3,7 +3,7 @@ idf_component_register (
     "main.cpp"
     "led_base.cpp"
     "led_event_loop.cpp"
-    "effects/christmas_tree.cpp"
+    "effects/christmas_tree_effect.cpp"
     "effects/fire_effect.cpp"
     "effects/stars_effect.cpp"
     "effects/test_effect.cpp"

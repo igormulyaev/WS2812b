@@ -1,4 +1,4 @@
-﻿#include "christmas_tree.h"
+﻿#include "christmas_tree_effect.h"
 #include "led_base.h"
 #include "timer_interface.h"
 
@@ -27,7 +27,7 @@
 // Compressed tree
 // (3-bit pixel color type) | (count - 1)
 // count max = 32
-const uint8_t ChristmasTree :: treeArch[] = {
+const uint8_t ChristmasTreeEffect :: treeArch[] = {
   // 0 col
   M_TREE_CL_SPACE        | (25 - 1),
   M_TREE_CL_LIGHT_BRANCH | (2 - 1),
@@ -161,7 +161,7 @@ const uint8_t ChristmasTree :: treeArch[] = {
 };
 
 // -----------------------------------------------------
-const CRGB ChristmasTree :: snowPalette[] = {
+const CRGB ChristmasTreeEffect :: snowPalette[] = {
   0x010101,
   0x010101,
   0x010101,
@@ -191,7 +191,7 @@ const CRGB ChristmasTree :: snowPalette[] = {
 };
 
 // -----------------------------------------------------
-const CRGB ChristmasTree :: lightBranchPalette[] = {
+const CRGB ChristmasTreeEffect :: lightBranchPalette[] = {
   0x001300,
   0x001400,
   0x001500,
@@ -221,7 +221,7 @@ const CRGB ChristmasTree :: lightBranchPalette[] = {
 };
 
 // -----------------------------------------------------
-const CRGB ChristmasTree :: lightTopPalette[] = {
+const CRGB ChristmasTreeEffect :: lightTopPalette[] = {
   0x000300,
   0x000300,
   0x000300,
@@ -275,18 +275,18 @@ const CRGB ChristmasTree :: lightTopPalette[] = {
 };
 
 // -----------------------------------------------------
-const char* ChristmasTree :: TAG = "christmas_tree";
+const char* ChristmasTreeEffect :: TAG = "christmas_tree_effect";
 
-const char* const ChristmasTree :: name = "ChristmasTree";
+const char* const ChristmasTreeEffect :: name = "ChristmasTree";
 
 // -----------------------------------------------------
-const char* ChristmasTree :: getName() const
+const char* ChristmasTreeEffect :: getName() const
 {
   return name;
 }
 
 // -----------------------------------------------------
-void ChristmasTree :: updatePixels (std :: vector <ChristmasTree :: SEffectPixel> &vec, const CRGB *palette, int paletteSize) 
+void ChristmasTreeEffect :: updatePixels (std :: vector <ChristmasTreeEffect :: SEffectPixel> &vec, const CRGB *palette, int paletteSize) 
 {
   for (auto p = vec.begin(); p != vec.end(); ++p) {
     leds[p->ledIndex] = palette[p->curColorIndex];
@@ -301,7 +301,7 @@ void ChristmasTree :: updatePixels (std :: vector <ChristmasTree :: SEffectPixel
 }
 
 // -----------------------------------------------------
-void ChristmasTree :: OnTimer() 
+void ChristmasTreeEffect :: OnTimer() 
 {
   FastLED.show();
   // update dynamic pixels
@@ -326,7 +326,7 @@ void ChristmasTree :: OnTimer()
 };
 
 // -----------------------------------------------------
-void ChristmasTree :: OnStart (ITimer* timer)
+void ChristmasTreeEffect :: OnStart (ITimer* timer)
 {
   ESP_LOGI(TAG, "Start");
 
@@ -388,6 +388,6 @@ void ChristmasTree :: OnStart (ITimer* timer)
 }
 
 // -----------------------------------------------------
-ChristmasTree :: ~ChristmasTree() 
+ChristmasTreeEffect :: ~ChristmasTreeEffect() 
 {
 }

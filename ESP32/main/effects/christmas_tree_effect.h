@@ -6,11 +6,11 @@
 #include "led_effect.h"
 #include "FastLED.h"
 
-class ChristmasTree: public LedEffect 
+class ChristmasTreeEffect: public LedEffect 
 {
   public:
-    ChristmasTree() {}
-    virtual ~ChristmasTree();
+    ChristmasTreeEffect() {}
+    virtual ~ChristmasTreeEffect();
 
     virtual void OnStart(ITimer* timer);
     virtual void OnInteract(const void* data) {};
