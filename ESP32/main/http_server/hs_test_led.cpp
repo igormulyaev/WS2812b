@@ -53,11 +53,11 @@ esp_err_t HttpServer :: testLedExecute (bool isPost, httpd_req_t* req)
     }
     if (isTestEffectOn) {
       ESP_LOGI (TAG, "Apply command \'%c\' to test effect", cmd);
-      ledEventLoop -> interactEventAction (&cmd);
+      ledEventLoop -> postInteractEvent (&cmd, sizeof (cmd));
     }
     else if (cmd == 'O') {
       ESP_LOGI (TAG, "Start test effect");
-      ledEventLoop -> startEventAction (&testEffect);
+      ledEventLoop -> postStartEvent (testEffect);
       isTestEffectOn = true;
     }
   }

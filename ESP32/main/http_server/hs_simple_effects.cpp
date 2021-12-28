@@ -69,7 +69,7 @@ esp_err_t HttpServer :: simpleEffectsExecute (bool isPost, httpd_req_t* req)
     if (newEffect) {
       effectName = newEffect -> getName();
       ESP_LOGI (TAG, "Start effect \"%s\"", effectName);
-      ledEventLoop -> startEventAction (&newEffect);
+      ledEventLoop -> postStartEvent (newEffect);
     }
   }
 

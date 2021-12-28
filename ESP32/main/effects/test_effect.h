@@ -9,17 +9,22 @@
 class TestEffect: public LedEffect 
 {
   public:
-    TestEffect() {}
+    TestEffect():
+      pos(0),
+      timer (0)
+    {}
     virtual ~TestEffect();
 
-    virtual void OnStart(ITimer* timer);
-    virtual void OnInteract(const void* data);
+    virtual void OnStart (ITimer* inTimer);
+    virtual void OnInteract (const void* data);
     virtual void OnTimer();
     virtual const char* getName() const;
 
     static const char* const name;
 
   private:
-    static const char* TAG;
+    static const char* const TAG;
+    size_t pos;
+    ITimer* timer;
 };
 #endif

@@ -6,6 +6,8 @@
 
 #define SCRATCH_BUFSIZE (10240)
 
+class UriHandler;
+
 class HttpServer 
 {
   public:
@@ -38,7 +40,9 @@ class HttpServer
 
     static const char* const TAG;
 
-    HttpServer(const HttpServer &) = delete;
-    HttpServer & operator=(const HttpServer &) = delete;
+    HttpServer (const HttpServer&) = delete;
+    HttpServer& operator= (const HttpServer&) = delete;
+
+    friend class UriHandler;
 };
 #endif

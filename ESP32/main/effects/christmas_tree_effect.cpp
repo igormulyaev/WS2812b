@@ -323,6 +323,7 @@ void ChristmasTreeEffect :: OnTimer()
 
   // branch lights
   updatePixels(lightBranchVec, lightBranchPalette, sizeof(lightBranchPalette) / sizeof(lightBranchPalette[0]));
+
 };
 
 // -----------------------------------------------------

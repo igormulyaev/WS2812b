@@ -56,6 +56,7 @@
         case 'R':
         case 'G':
         case 'B':
+        case 'L':
         case 'K':
           $drawState = 1;
           break;

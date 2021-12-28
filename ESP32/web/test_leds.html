@@ -17,6 +17,7 @@
     <input type="button" id="idBtnGreen" value="Green" onclick="sendCommand('G')" disabled>
     <input type="button" id="idBtnBlue" value="Blue" onclick="sendCommand('B')" disabled>
     <input type="button" id="idBtnBlack" value="Black" onclick="sendCommand('K')" disabled>
+    <input type="button" id="idBtnLight" value="Running light" onclick="sendCommand('L')" disabled>
   </p>
   <a href="index.html">Home</a>
 
@@ -44,6 +45,7 @@
       document.getElementById('idBtnGreen').disabled = !isOn;
       document.getElementById('idBtnBlue').disabled = !isOn;
       document.getElementById('idBtnBlack').disabled = !isOn;
+      document.getElementById('idBtnLight').disabled = !isOn;
     }
     // -------------------------------------------------------
     window.onload = function() 

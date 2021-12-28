@@ -33,9 +33,6 @@ class LedEventLoop : public ITimer {
 
     const LedEffect* getLedEffect() const { return ledEffect; }
 
-    void startEventAction (void* event_data);
-    void interactEventAction (void* event_data);
-
   private:
     esp_event_loop_handle_t loopHandle;
     esp_timer_handle_t ledRefreshTimer;
@@ -49,6 +46,8 @@ class LedEventLoop : public ITimer {
     static void refreshTimerHandle (void* timer_data);
 
     void timerEventAction();
+    void startEventAction (void* event_data);
+    void interactEventAction (void* event_data);
 
     LedEventLoop(const LedEventLoop &) = delete;
     LedEventLoop & operator=(const LedEventLoop &) = delete;
