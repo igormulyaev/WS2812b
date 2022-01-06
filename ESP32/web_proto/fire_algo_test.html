@@ -1,0 +1,320 @@
+<!DOCTYPE html>
+<html lang=en>
+<head>
+  <meta charset=utf-8>
+  <title>Fire algo test</title>
+</head>
+<body>
+  <div>
+    Fire algo test
+  </div>
+  <p>
+    <input type="button" id="idBtnDraw" value="draw" onclick="draw()"><br>
+  </p>
+
+  <canvas id="canvas_test" width="520" height="800"></canvas>
+
+  <br><a href="index.html">Home</a>
+
+  <script>
+    // -------------------------------------------------------
+    function draw() 
+    {
+      const pi2 = Math.PI * 2;
+      const x0 = 110;
+      const y0 = 110;
+
+      let canvas = document.getElementById ('canvas_test');
+      if (canvas.getContext) {
+        let ctx = canvas.getContext ('2d');
+
+        ctx.fillStyle = '#000000';
+        ctx.rect (0, 0, 519, 799);
+        ctx.fill();
+
+        ctx.strokeStyle = '#404040';
+        
+        for (let y = 0; y < 30; ++y) {
+          for (let x = 0; x < 16; ++x) {
+            ctx.fillStyle = palette [leds [x + y * 16]];
+            ctx.beginPath();
+            ctx.arc (x * 20 + x0, y * 20 + y0, 8, 0, pi2);
+            ctx.fill();
+            ctx.stroke();
+          }
+        }
+      }
+    }
+    // -------------------------------------------------------
+    window.onload = function() 
+    {
+      draw();
+    }
+    // -------------------------------------------------------
+    let leds = new Array();
+    leds.length = 16 * 30;
+    for (let i = 0; i < 30 * 16; ++i) {
+      leds [i] = i < 256? i : 0;
+    }
+
+    let palette = ['#000000',
+                   '#030000',
+                   '#060000',
+                   '#090000',
+                   '#0C0000',
+                   '#0F0000',
+                   '#120000',
+                   '#150000',
+                   '#180000',
+                   '#1B0000',
+                   '#1E0000',
+                   '#210000',
+                   '#240000',
+                   '#270000',
+                   '#2A0000',
+                   '#2D0000',
+                   '#300000',
+                   '#330000',
+                   '#360000',
+                   '#390000',
+                   '#3C0000',
+                   '#3F0000',
+                   '#420000',
+                   '#450000',
+                   '#480000',
+                   '#4B0000',
+                   '#4E0000',
+                   '#510000',
+                   '#540000',
+                   '#570000',
+                   '#5A0000',
+                   '#5D0000',
+                   '#600000',
+                   '#630000',
+                   '#660000',
+                   '#690000',
+                   '#6C0000',
+                   '#6F0000',
+                   '#720000',
+                   '#750000',
+                   '#780000',
+                   '#7B0000',
+                   '#7E0000',
+                   '#810000',
+                   '#840000',
+                   '#870000',
+                   '#8A0000',
+                   '#8D0000',
+                   '#900000',
+                   '#930000',
+                   '#960000',
+                   '#990000',
+                   '#9C0000',
+                   '#9F0000',
+                   '#A20000',
+                   '#A50000',
+                   '#A80000',
+                   '#AB0000',
+                   '#AE0000',
+                   '#B10000',
+                   '#B40000',
+                   '#B70000',
+                   '#BA0000',
+                   '#BD0000',
+                   '#C00000',
+                   '#C30000',
+                   '#C60000',
+                   '#C90000',
+                   '#CC0000',
+                   '#CF0000',
+                   '#D20000',
+                   '#D50000',
+                   '#D80000',
+                   '#DB0000',
+                   '#DE0000',
+                   '#E10000',
+                   '#E40000',
+                   '#E70000',
+                   '#EA0000',
+                   '#ED0000',
+                   '#F00000',
+                   '#F30000',
+                   '#F60000',
+                   '#F90000',
+                   '#FC0000',
+                   '#FF0000',
+                   '#FF0300',
+                   '#FF0600',
+                   '#FF0900',
+                   '#FF0C00',
+                   '#FF0F00',
+                   '#FF1200',
+                   '#FF1500',
+                   '#FF1800',
+                   '#FF1B00',
+                   '#FF1E00',
+                   '#FF2100',
+                   '#FF2400',
+                   '#FF2700',
+                   '#FF2A00',
+                   '#FF2D00',
+                   '#FF3000',
+                   '#FF3300',
+                   '#FF3600',
+                   '#FF3900',
+                   '#FF3C00',
+                   '#FF3F00',
+                   '#FF4200',
+                   '#FF4500',
+                   '#FF4800',
+                   '#FF4B00',
+                   '#FF4E00',
+                   '#FF5100',
+                   '#FF5400',
+                   '#FF5700',
+                   '#FF5A00',
+                   '#FF5D00',
+                   '#FF6000',
+                   '#FF6300',
+                   '#FF6600',
+                   '#FF6900',
+                   '#FF6C00',
+                   '#FF6F00',
+                   '#FF7200',
+                   '#FF7500',
+                   '#FF7800',
+                   '#FF7B00',
+                   '#FF7E00',
+                   '#FF8100',
+                   '#FF8400',
+                   '#FF8700',
+                   '#FF8A00',
+                   '#FF8D00',
+                   '#FF9000',
+                   '#FF9300',
+                   '#FF9600',
+                   '#FF9900',
+                   '#FF9C00',
+                   '#FF9F00',
+                   '#FFA200',
+                   '#FFA500',
+                   '#FFA800',
+                   '#FFAB00',
+                   '#FFAE00',
+                   '#FFB100',
+                   '#FFB400',
+                   '#FFB700',
+                   '#FFBA00',
+                   '#FFBD00',
+                   '#FFC000',
+                   '#FFC300',
+                   '#FFC600',
+                   '#FFC900',
+                   '#FFCC00',
+                   '#FFCF00',
+                   '#FFD200',
+                   '#FFD500',
+                   '#FFD800',
+                   '#FFDB00',
+                   '#FFDE00',
+                   '#FFE100',
+                   '#FFE400',
+                   '#FFE700',
+                   '#FFEA00',
+                   '#FFED00',
+                   '#FFF000',
+                   '#FFF300',
+                   '#FFF600',
+                   '#FFF900',
+                   '#FFFC00',
+                   '#FFFF00',
+                   '#FFFF03',
+                   '#FFFF06',
+                   '#FFFF09',
+                   '#FFFF0C',
+                   '#FFFF0F',
+                   '#FFFF12',
+                   '#FFFF15',
+                   '#FFFF18',
+                   '#FFFF1B',
+                   '#FFFF1E',
+                   '#FFFF21',
+                   '#FFFF24',
+                   '#FFFF27',
+                   '#FFFF2A',
+                   '#FFFF2D',
+                   '#FFFF30',
+                   '#FFFF33',
+                   '#FFFF36',
+                   '#FFFF39',
+                   '#FFFF3C',
+                   '#FFFF3F',
+                   '#FFFF42',
+                   '#FFFF45',
+                   '#FFFF48',
+                   '#FFFF4B',
+                   '#FFFF4E',
+                   '#FFFF51',
+                   '#FFFF54',
+                   '#FFFF57',
+                   '#FFFF5A',
+                   '#FFFF5D',
+                   '#FFFF60',
+                   '#FFFF63',
+                   '#FFFF66',
+                   '#FFFF69',
+                   '#FFFF6C',
+                   '#FFFF6F',
+                   '#FFFF72',
+                   '#FFFF75',
+                   '#FFFF78',
+                   '#FFFF7B',
+                   '#FFFF7E',
+                   '#FFFF81',
+                   '#FFFF84',
+                   '#FFFF87',
+                   '#FFFF8A',
+                   '#FFFF8D',
+                   '#FFFF90',
+                   '#FFFF93',
+                   '#FFFF96',
+                   '#FFFF99',
+                   '#FFFF9C',
+                   '#FFFF9F',
+                   '#FFFFA2',
+                   '#FFFFA5',
+                   '#FFFFA8',
+                   '#FFFFAB',
+                   '#FFFFAE',
+                   '#FFFFB1',
+                   '#FFFFB4',
+                   '#FFFFB7',
+                   '#FFFFBA',
+                   '#FFFFBD',
+                   '#FFFFC0',
+                   '#FFFFC3',
+                   '#FFFFC6',
+                   '#FFFFC9',
+                   '#FFFFCC',
+                   '#FFFFCF',
+                   '#FFFFD2',
+                   '#FFFFD5',
+                   '#FFFFD8',
+                   '#FFFFDB',
+                   '#FFFFDE',
+                   '#FFFFE1',
+                   '#FFFFE4',
+                   '#FFFFE7',
+                   '#FFFFEA',
+                   '#FFFFED',
+                   '#FFFFF0',
+                   '#FFFFF3',
+                   '#FFFFF6',
+                   '#FFFFF9',
+                   '#FFFFFC',
+                   '#FFFFFF',];
+    
+    let pos = 0;
+  </script>
+</body>
+</html>
