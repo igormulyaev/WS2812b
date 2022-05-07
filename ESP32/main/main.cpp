@@ -8,6 +8,7 @@
 
 #include "led_base.h"
 #include "net_base.h"
+#include "button_base.h"
 
 #include "led_event_loop.h"
 
@@ -28,12 +29,8 @@ void app_main ()
 {
   ledBaseInit ();
 
-/*  ledEventLoop -> startEventAction (&christmasTreeEffect);
+  buttonBaseInit ();
 
-  while (true) {
-    vTaskDelay (1000 / portTICK_PERIOD_MS);
-  };
-*/
   while (true) {
     ESP_LOGI (TAG, "Start christmasTreeEffect");
     ledEventLoop -> postStartEvent (christmasTreeEffect);

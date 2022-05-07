@@ -12,6 +12,7 @@ idf_component_register (
     "http_server/uri_handler.cpp"
     "http_server/hs_test_led.cpp"
     "http_server/hs_simple_effects.cpp"
+    "button_base.cpp"
   INCLUDE_DIRS 
     "."
 )
