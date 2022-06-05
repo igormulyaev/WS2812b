@@ -10,11 +10,13 @@ class LedEventLoop;
 class TestEffect;
 class ChristmasTreeEffect;
 class StarsEffect;
+class DebugEffect;
 
 extern LedEventLoop* ledEventLoop;
 extern TestEffect* testEffect;
 extern ChristmasTreeEffect* christmasTreeEffect;
 extern StarsEffect* starsEffect;
+extern DebugEffect* debugEffect;
 
 void ledBaseInit ();
 

@@ -2,6 +2,7 @@
 #include "effects/test_effect.h"
 #include "effects/christmas_tree_effect.h"
 #include "effects/stars_effect.h"
+#include "effects/debug_effect.h"
 #include "led_event_loop.h"
 
 static const char* TAG = "led_base";
@@ -13,6 +14,7 @@ LedEventLoop* ledEventLoop = NULL;
 TestEffect* testEffect = NULL;
 ChristmasTreeEffect* christmasTreeEffect = NULL;
 StarsEffect* starsEffect = NULL;
+DebugEffect* debugEffect = NULL;
 
 // -------------------------------------------------------------------------------
 void ledBaseInit () {
@@ -26,6 +28,7 @@ void ledBaseInit () {
   testEffect = new TestEffect;
   christmasTreeEffect = new ChristmasTreeEffect;
   starsEffect = new StarsEffect;
+  debugEffect = new DebugEffect;
 
   ESP_LOGI (TAG, "End init FastLED");
 }

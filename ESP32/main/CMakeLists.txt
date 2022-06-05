@@ -7,6 +7,7 @@ idf_component_register (
     "effects/fire_effect.cpp"
     "effects/stars_effect.cpp"
     "effects/test_effect.cpp"
+    "effects/debug_effect.cpp"
     "net_base.cpp"
     "http_server/http_server.cpp"
     "http_server/uri_handler.cpp"

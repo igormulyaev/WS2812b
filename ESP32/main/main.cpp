@@ -15,6 +15,7 @@
 #include "effects/led_effect.h"
 #include "effects/christmas_tree_effect.h"
 #include "effects/stars_effect.h"
+#include "effects/debug_effect.h"
 
 #include "esp_log.h"
 
@@ -31,22 +32,29 @@ void app_main ()
 
   buttonBaseInit ();
 
+  ESP_LOGI (TAG, "Start debugEffect");
+  ledEventLoop -> postStartEvent (debugEffect);
+
+  ESP_LOGI (TAG, "Wait 10s before start key scan");
+  vTaskDelay (10000 / portTICK_PERIOD_MS);
+
+  ESP_LOGI (TAG, "Start key scan");
+
+  int oldButtonVal = 1;
+
   while (true) {
-    ESP_LOGI (TAG, "Start christmasTreeEffect");
-    ledEventLoop -> postStartEvent (christmasTreeEffect);
+    int val = gpio_get_level (GPIO_NUM_0);
+    if (val != oldButtonVal) {
+      oldButtonVal = val;
+      ESP_LOGI (TAG, "Button val = %d", val);
 
-    vTaskDelay (60 * 1000 / portTICK_PERIOD_MS);
-
-    ESP_LOGI (TAG, "Start starsEffect");
-    ledEventLoop -> postStartEvent (starsEffect);
-
-    vTaskDelay (60 * 1000 / portTICK_PERIOD_MS);
+      if (val == 0) {
+        // Key pressed
+        ledEventLoop -> postInteractEvent (NULL, 0);
+      }
+    }
+    vTaskDelay (50 / portTICK_PERIOD_MS);
   }
 
   netBaseInit ();
-
-  // loop task
-  while (true) {
-    vTaskDelay (1000 / portTICK_PERIOD_MS);
-  };
 }
