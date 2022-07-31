@@ -35,26 +35,11 @@ void app_main ()
   ESP_LOGI (TAG, "Start debugEffect");
   ledEventLoop -> postStartEvent (debugEffect);
 
-  ESP_LOGI (TAG, "Wait 10s before start key scan");
-  vTaskDelay (10000 / portTICK_PERIOD_MS);
-
   ESP_LOGI (TAG, "Start key scan");
 
-  int oldButtonVal = 1;
-
-  while (true) {
-    int val = gpio_get_level (GPIO_NUM_0);
-    if (val != oldButtonVal) {
-      oldButtonVal = val;
-      ESP_LOGI (TAG, "Button val = %d", val);
-
-      if (val == 0) {
-        // Key pressed
-        ledEventLoop -> postInteractEvent (NULL, 0);
-      }
-    }
+  while (gpio_get_level (GPIO_NUM_0) != 0) {
     vTaskDelay (50 / portTICK_PERIOD_MS);
   }
-
   netBaseInit ();
+
 }
