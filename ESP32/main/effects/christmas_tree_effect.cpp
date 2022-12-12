@@ -1,6 +1,9 @@
 ﻿#include "christmas_tree_effect.h"
-#include "led_base.h"
+#include "led/led_base.h"
+#include "led/rmt_led.h"
 #include "timer_interface.h"
+#include "esp_random.h"
+#include "esp_log.h"
 
 // Refresh frequency, Hz
 #define M_REFRESH_FREQ 50
@@ -161,7 +164,7 @@ const uint8_t ChristmasTreeEffect :: treeArch[] = {
 };
 
 // -----------------------------------------------------
-const CRGB ChristmasTreeEffect :: snowPalette[] = {
+const RGB ChristmasTreeEffect :: snowPalette[] = {
   0x010101,
   0x010101,
   0x010101,
@@ -191,7 +194,7 @@ const CRGB ChristmasTreeEffect :: snowPalette[] = {
 };
 
 // -----------------------------------------------------
-const CRGB ChristmasTreeEffect :: lightBranchPalette[] = {
+const RGB ChristmasTreeEffect :: lightBranchPalette[] = {
   0x001300,
   0x001400,
   0x001500,
@@ -221,7 +224,7 @@ const CRGB ChristmasTreeEffect :: lightBranchPalette[] = {
 };
 
 // -----------------------------------------------------
-const CRGB ChristmasTreeEffect :: lightTopPalette[] = {
+const RGB ChristmasTreeEffect :: lightTopPalette[] = {
   0x000300,
   0x000300,
   0x000300,
@@ -275,7 +278,7 @@ const CRGB ChristmasTreeEffect :: lightTopPalette[] = {
 };
 
 // -----------------------------------------------------
-const char* ChristmasTreeEffect :: TAG = "christmas_tree_effect";
+const char* const ChristmasTreeEffect :: TAG = "christmas_tree_effect";
 
 const char* const ChristmasTreeEffect :: name = "ChristmasTree";
 
@@ -286,7 +289,7 @@ const char* ChristmasTreeEffect :: getName() const
 }
 
 // -----------------------------------------------------
-void ChristmasTreeEffect :: updatePixels (std :: vector <ChristmasTreeEffect :: SEffectPixel> &vec, const CRGB *palette, int paletteSize) 
+void ChristmasTreeEffect :: updatePixels (std :: vector <ChristmasTreeEffect :: SEffectPixel> &vec, const RGB *palette, int paletteSize) 
 {
   for (auto p = vec.begin(); p != vec.end(); ++p) {
     leds[p->ledIndex] = palette[p->curColorIndex];
@@ -303,7 +306,7 @@ void ChristmasTreeEffect :: updatePixels (std :: vector <ChristmasTreeEffect :: 
 // -----------------------------------------------------
 void ChristmasTreeEffect :: OnTimer() 
 {
-  FastLED.show();
+  rmtLed -> refresh ();
   // update dynamic pixels
 
   // top light
@@ -346,10 +349,10 @@ void ChristmasTreeEffect :: OnStart (ITimer* timer)
     uint8_t c = *arch++;
     uint8_t cType = c & M_TREE_CL_MASK;
 
-    for (int cnt = (c & M_TREE_CNT_MASK) + 1; cnt && pos < NUM_LEDS; --cnt, ++pos) {
+    for (int cnt = (c & M_TREE_CNT_MASK) + 1; cnt && pos < LED_COUNT; --cnt, ++pos) {
       switch (cType) {
         case M_TREE_CL_SPACE:
-          leds[pos] = CRGB::Black;
+          leds[pos] = RGB::Black;
           break;
         case M_TREE_CL_SNOW:
           leds[pos] = snowPalette[0];
@@ -381,8 +384,8 @@ void ChristmasTreeEffect :: OnStart (ITimer* timer)
     }
   }
 
-  for (; pos < NUM_LEDS; ++pos) {
-    leds[pos] = CRGB::Black;
+  for (; pos < LED_COUNT; ++pos) {
+    leds[pos] = RGB::Black;
   }
 
   timer -> startTimer (1000000 / M_REFRESH_FREQ);

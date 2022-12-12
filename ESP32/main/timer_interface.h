@@ -1,6 +1,7 @@
 ﻿#ifndef M_TIMER_INTERFACE_H
 #define M_TIMER_INTERFACE_H
 
+#include <cstdint>
 /*
   Timer interface
 */

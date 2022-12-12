@@ -1,7 +1,10 @@
 ﻿#include "debug_effect.h"
 #include "led_params.h"
 #include "timer_interface.h"
-#include "led_base.h"
+#include "led/led_base.h"
+#include "led/rmt_led.h"
+#include "esp_log.h"
+#include "esp_timer.h"
 
 // Refresh frequency, Hz
 #define M_REFRESH_FREQ 2
@@ -13,17 +16,17 @@ const char* const DebugEffect :: TAG = "debug_effect";
 const char* const DebugEffect :: name = "Debug";
 
 // -----------------------------------------------------
-const char* DebugEffect :: getName() const
+const char* DebugEffect :: getName () const
 {
   return name;
 }
 
 // -----------------------------------------------------
-void DebugEffect :: OnStart(ITimer* inTimer) 
+void DebugEffect :: OnStart (ITimer* inTimer) 
 {
-  ESP_LOGI(TAG, "Start");
-  FastLED.clearData();
-  FastLED.show();
+  ESP_LOGI (TAG, "Start");
+  ledsClean ();
+  rmtLed -> refresh ();
 
   firstLineShift = 0;
 
@@ -31,7 +34,7 @@ void DebugEffect :: OnStart(ITimer* inTimer)
 }
 
 // -----------------------------------------------------
-void DebugEffect :: drawLine(int y, CRGB color)
+void DebugEffect :: drawLine(int y, RGB color)
 {
   int pos = y;
   for (int i = 1; i <= LED_WIDTH / 2; ++i) {
@@ -44,7 +47,7 @@ void DebugEffect :: drawLine(int y, CRGB color)
 // -----------------------------------------------------
 void DebugEffect :: OnTimer() 
 {
-  FastLED.clearData();
+  ledsClean ();
 
   int pos = firstLineShift;
   // GBR
@@ -63,18 +66,18 @@ void DebugEffect :: OnTimer()
   drawLine (pos, 0x040404); // White
 
   int64_t mcsStart = esp_timer_get_time();
-  FastLED.show();
+  rmtLed -> refresh ();
   int64_t mcsTaken = esp_timer_get_time() - mcsStart;
   ESP_LOGI (TAG, "%lld mcs", mcsTaken);
 }
 
 // -----------------------------------------------------
-void DebugEffect :: OnInteract(const void*) 
+void DebugEffect :: OnInteract (const void*) 
 {
   firstLineShift = (firstLineShift + 1) % LED_HEIGHT;
 }
 
 // -----------------------------------------------------
-DebugEffect :: ~DebugEffect() 
+DebugEffect :: ~DebugEffect () 
 {
 }

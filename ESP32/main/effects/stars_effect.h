@@ -4,7 +4,7 @@
 #include <cstdint>
 #include <vector>
 #include "led_effect.h"
-#include "FastLED.h"
+#include "pixel.h"
 
 // Target frames per second
 #define STARS_STEPS (sizeof(StarsEffect :: palette) / sizeof(StarsEffect :: palette[0]))
@@ -18,18 +18,18 @@ class StarsEffect: public LedEffect
 
     virtual void OnStart (ITimer* timer);
     virtual void OnInteract (const void* data) {}
-    virtual void OnTimer();
+    virtual void OnTimer ();
     virtual const char* getName() const;
 
     static const char* const name;
 
   private:
-    static const CRGB palette[];
+    static const RGB palette [];
 
     std :: vector <int> pos;
     std :: vector <int> step;
 
-    static const char* TAG;
+    static const char* const TAG;
 };
 
 #endif

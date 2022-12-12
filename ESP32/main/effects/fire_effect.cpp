@@ -1,5 +1,7 @@
 ﻿#include "fire_effect.h"
 #include "led_params.h"
+#include "led/rmt_led.h"
+#include "esp_random.h"
 
 #define FIRE_K_LEFT 20
 #define FIRE_K_CENTER 92
@@ -8,39 +10,42 @@
 #define FIRE_BOTTOM_TICKS 6
 
 // -----------------------------------------------------
-void FireEffect :: OnTimer() {
+void FireEffect :: OnTimer () {
   if (!skipTick) {
-    FastLED.show();
+    rmtLed -> refresh ();
 
     if (cntBottom == 0) {
-      updateBottomLine();
+      updateBottomLine ();
       cntBottom = FIRE_BOTTOM_TICKS;
     }
     --cntBottom;
 
-    updateField();
-    updateLeds();
+    updateField ();
+    updateLeds ();
   }
   skipTick = !skipTick;
 };
 
 // -----------------------------------------------------
-void FireEffect :: OnStart() {
-  for (int pos = 0; pos < NUM_LEDS; ++pos) {
-    leds[pos] = CRGB::Black;
+void FireEffect :: OnStart () 
+{
+  for (int pos = 0; pos < LED_COUNT; ++pos) {
+    leds[pos] = RGB::Black;
   }
   skipTick = false;
   cntBottom = 0;
 }
 
 // -----------------------------------------------------
-FireEffect :: ~FireEffect() {
+FireEffect :: ~FireEffect () 
+{
 }
 
 // -----------------------------------------------------
-void FireEffect :: updateBottomLine() {
+void FireEffect :: updateBottomLine () 
+{
   // Pointer to bottom line
-  uint8_t *f = &field[NUM_LEDS - LED_WIDTH];
+  uint8_t *f = &field[LED_COUNT - LED_WIDTH];
 
   // Randomize all bottom pixels
   for (int cnt = LED_WIDTH; cnt; --cnt) {
@@ -49,7 +54,8 @@ void FireEffect :: updateBottomLine() {
 }
 
 // -----------------------------------------------------
-void FireEffect :: updateField() {
+void FireEffect :: updateField () 
+{
   // Pointer to current target line 
   uint8_t *tgt = field;
 
@@ -70,7 +76,7 @@ void FireEffect :: updateField() {
 
 // -----------------------------------------------------
 void FireEffect :: updateLeds() {
-  CRGB *tgt = leds;
+  RGB *tgt = leds;
   uint8_t const *src = field;
   // difference between field positions to get next led value
   int diff = LED_WIDTH;
@@ -86,7 +92,7 @@ void FireEffect :: updateLeds() {
 }
 
 // -----------------------------------------------------
-const CRGB FireEffect :: firePalette[256] = {
+const RGB FireEffect :: firePalette[256] = {
   0x000000,
   0x000000,
   0x000000,

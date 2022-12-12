@@ -1,10 +1,14 @@
 #ifndef M_LED_BASE_H
 #define M_LED_BASE_H
 
-#include "FastLED.h"
 #include "led_params.h"
+#include "pixel.h"
 
-extern CRGB leds[NUM_LEDS];
+extern RGB leds[LED_COUNT];
+
+void ledsClean ();
+void ledsSet (RGB color);
+void ledBaseInit ();
 
 class LedEventLoop;
 class TestEffect;
@@ -18,6 +22,7 @@ extern ChristmasTreeEffect* christmasTreeEffect;
 extern StarsEffect* starsEffect;
 extern DebugEffect* debugEffect;
 
-void ledBaseInit ();
+class RmtLed;
+extern RmtLed* rmtLed;
 
 #endif

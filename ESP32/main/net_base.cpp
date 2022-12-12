@@ -5,7 +5,7 @@
 #include "esp_netif.h"
 #include "esp_event.h"
 #include "esp_log.h"
-#include "mdns.h"
+//#include "mdns.h"
 #include "protocol_examples_common.h"
 #include "http_server/http_server.h"
 
@@ -18,13 +18,13 @@ static const char* TAG = "net_base";
 HttpServer* httpServer = NULL;
 
 // -------------------------------------------------------------------------------
-void initMdns() {
+/*void initMdns() {
   mdns_init ();
   mdns_hostname_set (MDNS_HOST_NAME);
   mdns_instance_name_set (MDNS_INSTANCE);
 
   ESP_ERROR_CHECK (mdns_service_add ("ESP32-WebServer", "_http", "_tcp", 80, NULL, 0));
-}
+} */
 
 // -------------------------------------------------------------------------------
 esp_err_t initFs () {
@@ -65,7 +65,7 @@ void netBaseInit () {
   ESP_ERROR_CHECK (esp_netif_init ());
   ESP_ERROR_CHECK (esp_event_loop_create_default ());
 
-  initMdns ();
+  //initMdns ();
 
   ESP_ERROR_CHECK (example_connect ());
   ESP_ERROR_CHECK (initFs ());

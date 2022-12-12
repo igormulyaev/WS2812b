@@ -1,1 +1,1 @@
-start idf.py flash monitor
+start idf.py --no-hints flash monitor

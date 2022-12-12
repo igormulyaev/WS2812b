@@ -1,12 +1,15 @@
 ﻿#include "stars_effect.h"
-#include "led_base.h"
+#include "led/led_base.h"
+#include "led/rmt_led.h"
 #include "timer_interface.h"
+#include "esp_random.h"
+#include "esp_log.h"
 
 // Refresh frequency, Hz
 #define M_REFRESH_FREQ 50
 
 // -----------------------------------------------------
-const CRGB StarsEffect :: palette[] = {
+const RGB StarsEffect :: palette[] = {
   0x4B5C38,
   0x809764,
   0xA6BD87,
@@ -85,7 +88,7 @@ const CRGB StarsEffect :: palette[] = {
 };
 
 // -----------------------------------------------------
-const char* StarsEffect :: TAG = "stars_effect";
+const char* const StarsEffect :: TAG = "stars_effect";
 
 const char* const StarsEffect :: name = "Stars";
 
@@ -109,18 +112,18 @@ void StarsEffect :: OnTimer()
     leds[pos[starN]] = palette[step[starN]];
   }
 
-  FastLED.show();
+  rmtLed -> refresh ();
 
   // Prepare next round
   for (int starN = 0; starN < STARS_COUNT; ++starN) {
     if (++step[starN] == STARS_STEPS) {
-      leds[pos[starN]] = CRGB::Black;
+      leds[pos[starN]] = RGB::Black;
 
       // Find empty position for new star
       int newPos;
       do {
-        newPos = esp_random() % NUM_LEDS;
-      } while (leds[newPos] != CRGB(CRGB::Black));
+        newPos = esp_random() % LED_COUNT;
+      } while (leds[newPos] != RGB (RGB::Black));
 
       pos[starN] = newPos;
       step[starN] = 0;
@@ -132,12 +135,12 @@ void StarsEffect :: OnTimer()
 // -----------------------------------------------------
 void StarsEffect :: OnStart (ITimer* timer)
 {
-  ESP_LOGI(TAG, "Start");
-  FastLED.clearData();
+  ESP_LOGI (TAG, "Start");
+  ledsClean ();
 
   for (int starN = 0; starN < STARS_COUNT; ++starN) {
-    pos[starN] = esp_random() % NUM_LEDS;
-    step[starN] = starN * STARS_STEPS / STARS_COUNT;
+    pos [starN] = esp_random () % LED_COUNT;
+    step [starN] = starN * STARS_STEPS / STARS_COUNT;
   }
 
   timer -> startTimer (1000000 / M_REFRESH_FREQ);

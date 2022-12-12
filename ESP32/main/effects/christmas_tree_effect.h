@@ -4,7 +4,7 @@
 #include <cstdint>
 #include <vector>
 #include "led_effect.h"
-#include "FastLED.h"
+#include "pixel.h"
 
 class ChristmasTreeEffect: public LedEffect 
 {
@@ -21,9 +21,9 @@ class ChristmasTreeEffect: public LedEffect
 
   private:
     static const uint8_t treeArch[];
-    static const CRGB snowPalette[];
-    static const CRGB lightBranchPalette[];
-    static const CRGB lightTopPalette[];
+    static const RGB snowPalette[];
+    static const RGB lightBranchPalette[];
+    static const RGB lightTopPalette[];
 
     struct SEffectPixel {
       int ledIndex;
@@ -38,8 +38,8 @@ class ChristmasTreeEffect: public LedEffect
     int lightTopCurColorIndex;
     int lightTopTgtColorIndex;
 
-    static void updatePixels(std :: vector <SEffectPixel> &vec, const CRGB *palette, int paletteSize);
-    static const char* TAG;
+    static void updatePixels(std :: vector <SEffectPixel> &vec, const RGB *palette, int paletteSize);
+    static const char* const TAG;
 };
 
 #endif

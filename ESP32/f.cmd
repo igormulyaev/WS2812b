@@ -1,1 +1,1 @@
-idf.py flash
+idf.py --no-hints flash

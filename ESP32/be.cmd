@@ -1,0 +1,1 @@
+idf.py --no-hints build > berr.txt

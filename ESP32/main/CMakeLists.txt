@@ -1,8 +1,9 @@
 idf_component_register (
   SRCS 
     "main.cpp"
-    "led_base.cpp"
-    "led_event_loop.cpp"
+    "led/led_base.cpp"
+    "led/led_event_loop.cpp"
+    "led/rmt_led.cpp"
     "effects/christmas_tree_effect.cpp"
     "effects/fire_effect.cpp"
     "effects/stars_effect.cpp"

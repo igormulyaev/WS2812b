@@ -1,2 +1,1 @@
-cls
-idf.py build
+idf.py --no-hints build

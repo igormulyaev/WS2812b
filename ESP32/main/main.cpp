@@ -6,18 +6,16 @@
    CONDITIONS OF ANY KIND, either express or implied.
 */
 
-#include "led_base.h"
+#include "led/led_base.h"
 #include "net_base.h"
 #include "button_base.h"
 
-#include "led_event_loop.h"
+#include "led/led_event_loop.h"
 
-#include "effects/led_effect.h"
-#include "effects/christmas_tree_effect.h"
-#include "effects/stars_effect.h"
 #include "effects/debug_effect.h"
 
 #include "esp_log.h"
+#include "driver/gpio.h"
 
 extern "C" {
   void app_main ();
