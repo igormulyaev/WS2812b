@@ -12,6 +12,7 @@ idf_component_register (
     "net_base.cpp"
     "http_server/http_server.cpp"
     "http_server/uri_handler.cpp"
+    "http_server/sysinfo_handler.cpp"
     "http_server/hs_test_led.cpp"
     "http_server/hs_simple_effects.cpp"
     "button_base.cpp"

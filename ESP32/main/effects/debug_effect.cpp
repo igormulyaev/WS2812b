@@ -65,10 +65,7 @@ void DebugEffect :: OnTimer()
   pos = (pos + 4) % LED_HEIGHT;
   drawLine (pos, 0x040404); // White
 
-  int64_t mcsStart = esp_timer_get_time();
   rmtLed -> refresh ();
-  int64_t mcsTaken = esp_timer_get_time() - mcsStart;
-  ESP_LOGI (TAG, "%lld mcs", mcsTaken);
 }
 
 // -----------------------------------------------------
@@ -79,5 +76,4 @@ void DebugEffect :: OnInteract (const void*)
 
 // -----------------------------------------------------
 DebugEffect :: ~DebugEffect () 
-{
-}
+{}

@@ -1,7 +1,7 @@
 ﻿#include "http_server.h"
 #include "esp_log.h"
-#include "esp_chip_info.h"
 #include <fcntl.h>
+#include "sysinfo_handler.h"
 
 const char* const HttpServer :: TAG = "http_server";
 
@@ -18,7 +18,7 @@ HttpServer :: HttpServer (const char* inBasePath) :
   ESP_LOGI(TAG, "HTTP Server started");
 
   // Add URI handlers
-  registerUri ("/api/v1/system/info", HTTP_GET, systemInfoGetUriHandler);
+  sysinfoHandler = new SysinfoHandler (this);
   registerUri ("/api/test_led", HTTP_GET, testLedGetUriHandler);
   registerUri ("/api/test_led", HTTP_POST, testLedPostUriHandler);
   registerUri ("/api/simple_effects", HTTP_GET, simpleEffectsGetUriHandler);
@@ -31,6 +31,8 @@ HttpServer :: HttpServer (const char* inBasePath) :
 // -----------------------------------------------------
 HttpServer :: ~HttpServer () 
 {
+  delete sysinfoHandler;
+
   if (server) {
     ESP_ERROR_CHECK (httpd_stop (server));
     server = NULL;
@@ -49,24 +51,6 @@ void HttpServer :: registerUri (const char* p_uri,
     .user_ctx = static_cast <void*> (this)
   };
   ESP_ERROR_CHECK (httpd_register_uri_handler (server, &uriConfig));
-}
-
-// -----------------------------------------------------
-esp_err_t HttpServer :: systemInfoGetUriHandler (httpd_req_t* req)
-{
-  ESP_LOGI (TAG, "Get version");
-
-  HttpServer* srv = static_cast <HttpServer*> (req -> user_ctx);
-  
-  httpd_resp_set_type (req, "application/json");
-
-  esp_chip_info_t chip_info;
-  esp_chip_info(&chip_info);
-
-  char *sys_info = srv -> buf;
-
-  sprintf (sys_info, "{version: \"%s\", cores: %d}", IDF_VER, chip_info.cores);
-  return httpd_resp_sendstr(req, sys_info);
 }
 
 // -----------------------------------------------------
