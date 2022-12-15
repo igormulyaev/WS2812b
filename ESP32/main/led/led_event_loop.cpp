@@ -4,8 +4,9 @@
 #include "freertos/task.h"
 #include "esp_log.h"
 
-#define M_LED_EVENT_LOOP_CORE 1
-#define M_LED_TASK_PRIORITY 2
+#define LED_EVENT_LOOP_CORE 1
+#define LED_TASK_PRIORITY 2
+#define LED_TASK_STACK_SIZE 4096
 
 static const char* TAG = "led_event_loop";
 
@@ -87,9 +88,9 @@ LedEventLoop :: LedEventLoop ()
   esp_event_loop_args_t loopArgs = {
       .queue_size = 5,
       .task_name = "led_event_loop_task", // task will be created
-      .task_priority = M_LED_TASK_PRIORITY,
-      .task_stack_size = 2048,
-      .task_core_id = M_LED_EVENT_LOOP_CORE
+      .task_priority = LED_TASK_PRIORITY,
+      .task_stack_size = LED_TASK_STACK_SIZE,
+      .task_core_id = LED_EVENT_LOOP_CORE
   };
   // Create the event loop
   ESP_ERROR_CHECK (esp_event_loop_create (&loopArgs, &loopHandle));
