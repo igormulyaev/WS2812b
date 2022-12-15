@@ -3,6 +3,7 @@
 #include "led/led_base.h"
 #include "led/led_event_loop.h"
 #include "effects/test_effect.h"
+#include <string>
 
 // -----------------------------------------------------
 esp_err_t HttpServer :: testLedGetUriHandler (httpd_req_t* req)

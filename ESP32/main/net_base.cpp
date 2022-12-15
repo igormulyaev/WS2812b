@@ -11,7 +11,6 @@
 
 #define MDNS_HOST_NAME "ws-esp"
 #define MDNS_INSTANCE "esp home web server"
-#define WEB_MOUNT_POINT "/www"
 
 static const char* TAG = "net_base";
 
@@ -70,5 +69,5 @@ void netBaseInit () {
   ESP_ERROR_CHECK (example_connect ());
   ESP_ERROR_CHECK (initFs ());
 
-  httpServer = new HttpServer (WEB_MOUNT_POINT);
+  httpServer = new HttpServer;
 }
