@@ -5,7 +5,7 @@
 #include "esp_log.h"
 
 #define LED_EVENT_LOOP_CORE 1
-#define LED_TASK_PRIORITY 2
+#define LED_TASK_PRIORITY 1
 #define LED_TASK_STACK_SIZE 4096
 
 static const char* TAG = "led_event_loop";

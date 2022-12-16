@@ -3,8 +3,8 @@
 #include "esp_log.h"
 #include "led_base.h"
 
-#define LED_RMT_RESOLUTION_HZ (10 * 1000 * 1000)
-#define LED_RMT_BLOCK_SYMBOLS 256
+#define LED_RMT_RESOLUTION_HZ (20 * 1000 * 1000)
+#define LED_RMT_BLOCK_SYMBOLS 512
 #define LED_RMT_QUEUE_DEPTH 4
 #define LED_RMT_WITH_DMA 0
 

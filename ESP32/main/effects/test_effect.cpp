@@ -55,7 +55,7 @@ void TestEffect :: OnInteract (const void* data)
       case 'L':
         ESP_LOGI (TAG, "Start running light");
         pos = LED_COUNT - 1;
-        timer -> startPeriodicTimer (1000000 / 5);
+        timer -> startPeriodicTimer (1000000 / 30);
         break;
         
       default:

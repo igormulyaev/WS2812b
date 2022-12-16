@@ -56,7 +56,4 @@ class LedEventLoop : public ITimer {
 
 };
 
-// ---------------------------------------------------
-
-
 #endif
