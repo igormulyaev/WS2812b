@@ -388,7 +388,7 @@ void ChristmasTreeEffect :: OnStart (ITimer* timer)
     leds[pos] = RGB::Black;
   }
 
-  timer -> startTimer (1000000 / M_REFRESH_FREQ);
+  timer -> startPeriodicTimer (1000000 / M_REFRESH_FREQ);
 }
 
 // -----------------------------------------------------

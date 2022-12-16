@@ -30,7 +30,7 @@ void DebugEffect :: OnStart (ITimer* inTimer)
 
   firstLineShift = 0;
 
-  inTimer -> startTimer (1000000 / M_REFRESH_FREQ);
+  inTimer -> startPeriodicTimer (1000000 / M_REFRESH_FREQ);
 }
 
 // -----------------------------------------------------

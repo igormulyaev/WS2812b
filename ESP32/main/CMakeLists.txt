@@ -2,6 +2,7 @@ idf_component_register (
   SRCS 
     "main.cpp"
     "director.cpp"
+    "timer_interface.cpp"
     "led/led_base.cpp"
     "led/led_event_loop.cpp"
     "led/rmt_led.cpp"

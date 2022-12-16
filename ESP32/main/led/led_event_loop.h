@@ -26,24 +26,26 @@ class LedEventLoop : public ITimer {
     LedEventLoop();
     ~LedEventLoop();
 
-    void postStartEvent(LedEffect* effect);
-    void postInteractEvent(void* data, size_t size);
+    void postStartEvent (LedEffect* effect);
+    void postInteractEvent (void* data, size_t size);
+    void postTimerEvent ();
 
-    virtual void startTimer(uint64_t period);
+    virtual void startPeriodicTimer (uint64_t period);
+    virtual void startOnceTimer (uint64_t timeout);
 
-    const LedEffect* getLedEffect() const { return ledEffect; }
+    const LedEffect* getLedEffect () const { return ledEffect; }
 
   private:
     esp_event_loop_handle_t loopHandle;
-    esp_timer_handle_t ledRefreshTimer;
+
+    Timer ledRefreshTimer;
+    virtual void timerAlarm ();
 
     LedEffect* ledEffect;
 
     static void startEventHandler (void* handler_args, esp_event_base_t base, int32_t id, void* event_data);
     static void timerEventHandler (void* handler_args, esp_event_base_t base, int32_t id, void* event_data);
     static void interactEventHandler (void* handler_args, esp_event_base_t base, int32_t id, void* event_data);
-
-    static void refreshTimerHandle (void* timer_data);
 
     void timerEventAction();
     void startEventAction (void* event_data);

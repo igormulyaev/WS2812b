@@ -34,18 +34,31 @@ void LedEventLoop :: interactEventHandler (void* handler_args, esp_event_base_t 
   ledEffectLoop -> interactEventAction (event_data);
 }
 
-// -----------------------------------------------------
-void LedEventLoop :: refreshTimerHandle (void* timer_args) 
+// ############################################################
+// ### Executes when the timer alarms
+// ############################################################
+void LedEventLoop :: timerAlarm () 
 {
-  LedEventLoop* ledEffectLoop = static_cast <LedEventLoop*> (timer_args);
-  ESP_ERROR_CHECK (esp_event_post_to (ledEffectLoop -> loopHandle, LED_EVENTS, TIMER_LED_EVENT, NULL, 0, portMAX_DELAY));
+  postTimerEvent ();
+}
+
+// ############################################################
+void LedEventLoop :: startPeriodicTimer (uint64_t period) 
+{
+  ledRefreshTimer.startPeriodic (period);
+}
+
+// ############################################################
+void LedEventLoop :: startOnceTimer (uint64_t timeout) 
+{
+  ledRefreshTimer.startOnce (timeout);
 }
 
 // -----------------------------------------------------
 void LedEventLoop :: startEventAction (void* event_data) 
 {
   if (event_data) {
-    startTimer (0);
+    ledRefreshTimer.stop ();
 
     ledEffect = *static_cast <LedEffect**> (event_data);
     if (ledEffect) {
@@ -80,6 +93,7 @@ void LedEventLoop :: interactEventAction (void* event_data)
 
 // -----------------------------------------------------
 LedEventLoop :: LedEventLoop () 
+: ledRefreshTimer (this, "led_refresh_timer")
 {
   ledEffect = NULL;
 
@@ -98,46 +112,35 @@ LedEventLoop :: LedEventLoop ()
   ESP_ERROR_CHECK (esp_event_handler_instance_register_with (loopHandle, LED_EVENTS, START_LED_EVENT, startEventHandler, this, NULL));
   ESP_ERROR_CHECK (esp_event_handler_instance_register_with (loopHandle, LED_EVENTS, TIMER_LED_EVENT, timerEventHandler, this, NULL));
   ESP_ERROR_CHECK (esp_event_handler_instance_register_with (loopHandle, LED_EVENTS, INTERACT_LED_EVENT, interactEventHandler, this, NULL));
-
-  esp_timer_create_args_t timerCreateArgs = {
-      .callback = refreshTimerHandle,
-      .arg = this,
-      .dispatch_method = ESP_TIMER_TASK,
-      .name = "led_refresh_timer",
-      .skip_unhandled_events = true
-  };
-  ESP_ERROR_CHECK (esp_timer_create (&timerCreateArgs, &ledRefreshTimer));
 }
 
-// -----------------------------------------------------
-void LedEventLoop :: startTimer (uint64_t period) 
-{
-  if (esp_timer_is_active (ledRefreshTimer)) {
-    ESP_LOGI (TAG, "stop timer");
-    ESP_ERROR_CHECK (esp_timer_stop (ledRefreshTimer));
-  }
-
-  if (period != 0) {
-    ESP_LOGI (TAG, "start timer, period = %llu", period);
-    ESP_ERROR_CHECK (esp_timer_start_periodic (ledRefreshTimer, period));
-  }
-}
-
-// -----------------------------------------------------
+// ############################################################
+// ### Post start event
+// ############################################################
 void LedEventLoop :: postStartEvent (LedEffect* effect) 
 {
   ESP_ERROR_CHECK (esp_event_post_to (loopHandle, LED_EVENTS, START_LED_EVENT, static_cast <void*> (&effect), sizeof (&effect), portMAX_DELAY));
 }
 
-// -----------------------------------------------------
+// ############################################################
+// ### Post interact event
+// ############################################################
 void LedEventLoop :: postInteractEvent (void* data, size_t size) 
 {
   ESP_ERROR_CHECK (esp_event_post_to (loopHandle, LED_EVENTS, INTERACT_LED_EVENT, data, size, portMAX_DELAY));
 }
 
-// -----------------------------------------------------
+// ############################################################
+// ### Post timer event
+// ### Called from timer alarm, and can be called by manual
+// ############################################################
+void LedEventLoop :: postTimerEvent () 
+{
+  ESP_ERROR_CHECK (esp_event_post_to (loopHandle, LED_EVENTS, TIMER_LED_EVENT, NULL, 0, portMAX_DELAY));
+}
+
+// ############################################################
 LedEventLoop :: ~LedEventLoop () 
 {
-  ESP_ERROR_CHECK (esp_timer_delete (ledRefreshTimer));
   ESP_ERROR_CHECK (esp_event_loop_delete (loopHandle));
 }

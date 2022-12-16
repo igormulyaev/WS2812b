@@ -143,7 +143,7 @@ void StarsEffect :: OnStart (ITimer* timer)
     step [starN] = starN * STARS_STEPS / STARS_COUNT;
   }
 
-  timer -> startTimer (1000000 / M_REFRESH_FREQ);
+  timer -> startPeriodicTimer (1000000 / M_REFRESH_FREQ);
 }
 
 // -----------------------------------------------------

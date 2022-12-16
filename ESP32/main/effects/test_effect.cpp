@@ -33,32 +33,36 @@ void TestEffect :: OnInteract (const void* data)
     switch (*static_cast <const char*> (data)) {
       case 'R':
         ESP_LOGI (TAG, "color = RED");
-        timer -> startTimer (0);
+        timer -> startPeriodicTimer (0);
         ledsSet (0x000400);
+        rmtLed -> refresh ();
         break;
 
       case 'G':
         ESP_LOGI (TAG, "color = GREEN");
-        timer -> startTimer (0);
+        timer -> startPeriodicTimer (0);
         ledsSet (0x040000);
+        rmtLed -> refresh ();
         break;
 
       case 'B':
         ESP_LOGI (TAG, "color = BLUE");
-        timer -> startTimer (0);
+        timer -> startPeriodicTimer (0);
         ledsSet (0x000004);
+        rmtLed -> refresh ();
         break;
 
       case 'L':
         ESP_LOGI (TAG, "Start running light");
         pos = LED_COUNT - 1;
-        timer -> startTimer (1000000 / 5);
+        timer -> startPeriodicTimer (1000000 / 5);
         break;
         
       default:
         ESP_LOGI(TAG, "color = BLACK");
-        timer -> startTimer (0);
+        timer -> startPeriodicTimer (0);
         ledsSet (RGB::Black);
+        rmtLed -> refresh ();
     }
   }
   else {
