@@ -132,7 +132,7 @@ void LedEventLoop :: postInteractEvent (void* data, size_t size)
 
 // ############################################################
 // ### Post timer event
-// ### Called from timer alarm, and can be called by manual
+// ### Called from timer alarm, and can be called manually
 // ############################################################
 void LedEventLoop :: postTimerEvent () 
 {

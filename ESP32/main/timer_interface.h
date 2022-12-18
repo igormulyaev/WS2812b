@@ -1,7 +1,6 @@
 ﻿#ifndef TIMER_INTERFACE_H
 #define TIMER_INTERFACE_H
 
-//#include <cstdint>
 #include "esp_timer.h"
 
 class Timer;

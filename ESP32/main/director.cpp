@@ -1,14 +1,34 @@
 ﻿#include "director.h"
 
+// ############################################################
 Director :: Director ()
+: timer (this, "director_timer")
+{}
+
+// ############################################################
+Director :: ~Director ()
+{}
+
+// ############################################################
+void Director :: startPeriodicTimer (uint64_t period) 
 {
-  esp_timer_create_args_t timerCreateArgs = {
-      .callback = timerHandle,
-      .arg = this,
-      .dispatch_method = ESP_TIMER_TASK,
-      .name = "director_timer",
-      .skip_unhandled_events = true
-  };
-  ESP_ERROR_CHECK (esp_timer_create (&timerCreateArgs, &timer));
+  timer.startPeriodic (period);
 }
 
+// ############################################################
+void Director :: startOnceTimer (uint64_t timeout) 
+{
+  timer.startOnce (timeout);
+}
+
+
+// ############################################################
+// ### Executes when the timer alarms
+// ############################################################
+void Director :: timerAlarm () 
+{
+}
+
+
+// ############################################################
+Director* director = NULL;

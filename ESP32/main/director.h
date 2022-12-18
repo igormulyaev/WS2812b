@@ -1,20 +1,25 @@
 ﻿#ifndef DIRECTOR_H
 #define DIRECTOR_H
 
-#include "esp_timer.h"
+#include "timer_interface.h"
 
-class Director
+class Director: public ITimer
 {
   public:
     Director ();
-    ~Director ();
+    virtual ~Director ();
+
+    virtual void startPeriodicTimer (uint64_t period);
+    virtual void startOnceTimer (uint64_t timeout);
 
   private:
-    esp_timer_handle_t timer;
-    static void timerHandle (void* timer_data);
+    virtual void timerAlarm ();
+    Timer timer;
     
     Director (const Director &) = delete;
     Director & operator=(const Director &) = delete;
 };
+
+extern Director* director;
 
 #endif
